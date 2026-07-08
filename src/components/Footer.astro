@@ -1,0 +1,62 @@
+---
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+const columns = [
+  {
+    title: 'Service areas',
+    links: [
+      { label: 'Bookkeeping & Financial', href: '/services#bookkeeping' },
+      { label: 'Admin & Executive Support', href: '/services#admin' },
+      { label: 'HR & Payroll', href: '/services#hr-payroll' },
+      { label: 'Operations & Procurement', href: '/services#operations' },
+      { label: 'Marketing', href: '/services#marketing' },
+      { label: 'Customer Service', href: '/services#customer-service' },
+      { label: 'Systems & Projects', href: '/services#systems' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'How it works', href: '/how-it-works' },
+      { label: 'Pricing & bundles', href: '/pricing' },
+      { label: 'About Hyture', href: '/about' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+];
+---
+
+<footer class="bg-ink text-sand">
+  <div class="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-12">
+    <div>
+      <Logo variant="solid-light" />
+      <p class="mt-4 text-sand/70 max-w-xs text-[0.95rem] leading-relaxed">
+        Your AI-powered 2IC — so you can run your business, not be run by it.
+        Built for Australian SMEs.
+      </p>
+    </div>
+
+    {columns.map((col) => (
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-teal mb-4">{col.title}</h3>
+        <ul class="space-y-2.5">
+          {col.links.map((link) => (
+            <li>
+              <a href={link.href} class="text-sand/75 hover:text-sand text-[0.95rem] transition-colors">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="border-t border-sand/15">
+    <div class="mx-auto max-w-6xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-sand/55">
+      <span>© {year} Hyture. All rights reserved.</span>
+      <span>Sydney, Australia</span>
+    </div>
+  </div>
+</footer>

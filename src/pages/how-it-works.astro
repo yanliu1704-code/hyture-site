@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const workflowSteps = [
+  { title: 'Capture', body: 'Invoices, receipts, emails, tickets, and forms flow in from the tools you already use. AI reads and classifies them automatically.' },
+  { title: 'Process', body: 'Data is entered, validated, and cross-referenced. Anomalies — a missed payment, an odd transaction, a compliance flag — are surfaced early, not discovered later.' },
+  { title: 'Draft', body: 'Responses, reports, reconciliations, and lodgements are prepared, ready for a person to check.' },
+  { title: 'Review', body: 'A named human on your account reviews every output before it reaches you or your customers. No exceptions.' },
+  { title: 'Deliver', body: "You get the finished result — a lodged BAS, a closed ticket, a reconciled account — not a task added to your list." },
+];
+---
+
+<Layout title="How it works" description="How Hyture combines AI automation with human review to deliver bookkeeping, admin, HR, operations, marketing and customer service for Australian SMEs.">
+  <section class="mx-auto max-w-6xl px-6 pt-16 pb-4 md:pt-20">
+    <span class="inline-flex rounded-full bg-ink/5 border border-ink/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink/70">
+      How it works
+    </span>
+    <h1 class="mt-6 font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
+      AI does the volume. A person does the judgement.
+    </h1>
+    <p class="mt-5 text-slate text-lg leading-relaxed max-w-2xl">
+      Every task that runs through Hyture follows the same five-step path —
+      whether it's a single invoice or a full HR onboarding.
+    </p>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid md:grid-cols-5 gap-4">
+      {workflowSteps.map((step, i) => (
+        <div class="relative">
+          <div class="rounded-2xl border border-ink/10 p-6 h-full">
+            <span class="text-xs font-bold text-teal-dark tracking-wide">STEP {i + 1}</span>
+            <h3 class="mt-2 font-[General_Sans] font-semibold text-lg">{step.title}</h3>
+            <p class="mt-2 text-slate text-sm leading-relaxed">{step.body}</p>
+          </div>
+          {i < workflowSteps.length - 1 && (
+            <div class="hidden md:flex absolute top-1/2 -right-4 -translate-y-1/2 z-10 w-8 h-8 items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L10 4M14 8L10 12" stroke="#00C2B8" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- COMMITMENT -->
+  <section class="bg-ink text-sand py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+        Our human-in-the-loop commitment.
+      </h2>
+      <div class="mt-10 grid sm:grid-cols-2 gap-6">
+        {[
+          'No unreviewed communication sent in your business name',
+          'No financial transaction processed without human sign-off',
+          'No compliance lodgement submitted without qualified human review',
+          'A named account manager for every client, who knows your business',
+        ].map((item) => (
+          <div class="flex gap-3 rounded-xl bg-sand/[0.05] border border-sand/10 p-5">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="shrink-0 mt-0.5">
+              <circle cx="10" cy="10" r="9" stroke="#00C2B8" stroke-width="1.5"/>
+              <path d="M6 10.2L8.6 12.8L14 7" stroke="#00C2B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-sand/85">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ONBOARDING TIMELINE -->
+  <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+      From first call to first task off your plate.
+    </h2>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-ink/10 p-7">
+        <span class="text-xs font-bold tracking-wide text-teal-dark">L1 — CORE</span>
+        <p class="mt-3 font-semibold text-lg">Live in 5 business days</p>
+        <p class="mt-2 text-slate text-sm leading-relaxed">Pick a service, complete a 15-minute onboarding form, grant platform access. That's it.</p>
+      </div>
+      <div class="rounded-2xl border border-ink/10 p-7">
+        <span class="text-xs font-bold tracking-wide text-teal-dark">L2 — ADVANCED</span>
+        <p class="mt-3 font-semibold text-lg">Live on day 15</p>
+        <p class="mt-2 text-slate text-sm leading-relaxed">A scoping call, a tailored proposal, then a structured 2-week onboarding covering process mapping and handover.</p>
+      </div>
+      <div class="rounded-2xl border-2 border-teal bg-teal/5 p-7">
+        <span class="text-xs font-bold tracking-wide text-teal-dark">L3 — STRATEGIC</span>
+        <p class="mt-3 font-semibold text-lg">A designed transition</p>
+        <p class="mt-2 text-slate text-sm leading-relaxed">A strategy session, a custom solution designed and presented within 2 weeks, then a structured handover to your dedicated 2IC.</p>
+      </div>
+    </div>
+    <div class="mt-10 text-center">
+      <a href="/pricing" class="inline-flex items-center gap-1.5 text-ink font-semibold hover:text-teal-dark transition-colors">
+        See full pricing & bundles
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </section>
+</Layout>

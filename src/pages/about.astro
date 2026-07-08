@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About" description="Hyture is a worry-free business operations service built for Australian small and medium enterprises — an AI-powered 2IC for the operational functions that slow you down.">
+  <section class="mx-auto max-w-4xl px-6 pt-16 pb-8 md:pt-20">
+    <span class="inline-flex rounded-full bg-ink/5 border border-ink/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink/70">
+      About Hyture
+    </span>
+    <h1 class="mt-6 font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight">
+      A second-in-command, built for how small business actually runs.
+    </h1>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-8 space-y-6 text-lg text-slate leading-relaxed">
+    <p>
+      Hyture is a worry-free business operations service built for Australian
+      small and medium enterprises. We act as your <strong class="text-ink">Second-in-Command
+      (2IC)</strong> — taking ownership of the back-office and operational
+      functions that slow you down, so you can focus on growth.
+    </p>
+    <p>
+      Every service is AI-powered at its core, and supported by experienced
+      humans at every critical step. We don't just hand you a piece of
+      software — we hand you a solution, and the peace of mind that comes
+      with it.
+    </p>
+    <p>
+      Most small business owners didn't start their company to spend their
+      evenings reconciling invoices or chasing a super lodgement deadline.
+      Hyture exists to take that weight off — quietly, reliably, and without
+      needing you to hire a whole department to do it.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-14">
+    <div class="rounded-2xl border border-ink/10 p-8 md:p-10">
+      <h2 class="font-[General_Sans] font-bold text-2xl">What makes Hyture different</h2>
+      <ul class="mt-6 space-y-4">
+        {[
+          ['AI backbone, human judgement', 'Automation handles the repetitive; our team handles the nuanced.'],
+          ['Solution-first, not headcount-first', "You're buying an outcome, not an FTE."],
+          ['Designed for Australian compliance', 'Fair Work, STP, BAS, GST, and more are built in from day one.'],
+          ['Scalable tiers', 'Start with one area, grow into a full 2IC relationship.'],
+          ['No lock-in at the entry tier', 'Cancel month-to-month with 30 days notice.'],
+        ].map(([title, body]) => (
+          <li class="flex gap-4">
+            <div class="w-2 shrink-0 rounded-full bg-teal mt-1.5"></div>
+            <div>
+              <p class="font-semibold text-ink">{title}</p>
+              <p class="text-slate text-[0.95rem] mt-0.5">{body}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 pb-24">
+    <div class="rounded-3xl bg-ink text-sand px-8 py-14 md:px-14 text-center">
+      <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight">
+        Curious whether Hyture fits your business?
+      </h2>
+      <a href="/contact" class="mt-7 inline-flex items-center rounded-full bg-amber text-ink px-7 py-3.5 font-semibold hover:brightness-95 transition">
+        Book a scoping call
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact" description="Book a scoping call with Hyture, or send us a message about which service area fits your business.">
+  <section class="mx-auto max-w-5xl px-6 pt-16 pb-20 md:pt-20 md:pb-28 grid md:grid-cols-2 gap-14">
+    <div>
+      <span class="inline-flex rounded-full bg-ink/5 border border-ink/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink/70">
+        Contact
+      </span>
+      <h1 class="mt-6 font-[General_Sans] font-bold text-4xl tracking-tight">
+        Let's find the right place to start.
+      </h1>
+      <p class="mt-5 text-slate text-lg leading-relaxed">
+        Tell us a bit about your business and where things feel heaviest.
+        We'll come back with a straightforward view of which service area —
+        and which tier — makes sense first.
+      </p>
+
+      <div class="mt-10 space-y-5 text-sm">
+        <div class="flex gap-3">
+          <span class="text-teal-dark font-semibold w-24 shrink-0">Response time</span>
+          <span class="text-slate">Within one business day</span>
+        </div>
+        <div class="flex gap-3">
+          <span class="text-teal-dark font-semibold w-24 shrink-0">Scoping call</span>
+          <span class="text-slate">Free, no obligation, ~20 minutes</span>
+        </div>
+        <div class="flex gap-3">
+          <span class="text-teal-dark font-semibold w-24 shrink-0">Based in</span>
+          <span class="text-slate">Sydney, Australia — servicing SMEs nationwide</span>
+        </div>
+      </div>
+    </div>
+
+    <form class="rounded-2xl border border-ink/10 p-7 space-y-5">
+      <div>
+        <label for="name" class="block text-sm font-semibold mb-1.5">Name</label>
+        <input id="name" name="name" type="text" required class="w-full rounded-lg border border-ink/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal" />
+      </div>
+      <div>
+        <label for="business" class="block text-sm font-semibold mb-1.5">Business name</label>
+        <input id="business" name="business" type="text" class="w-full rounded-lg border border-ink/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal" />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-semibold mb-1.5">Email</label>
+        <input id="email" name="email" type="email" required class="w-full rounded-lg border border-ink/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal" />
+      </div>
+      <div>
+        <label for="area" class="block text-sm font-semibold mb-1.5">Area of interest</label>
+        <select id="area" name="area" class="w-full rounded-lg border border-ink/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal bg-white">
+          <option>Bookkeeping & Financial Management</option>
+          <option>Administration & Executive Support</option>
+          <option>HR & Payroll</option>
+          <option>Operations & Procurement</option>
+          <option>Marketing</option>
+          <option>Customer Service</option>
+          <option>Systems & Project Management</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-semibold mb-1.5">What's slowing you down right now?</label>
+        <textarea id="message" name="message" rows="4" class="w-full rounded-lg border border-ink/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal"></textarea>
+      </div>
+      <button type="submit" class="w-full rounded-full bg-amber text-ink px-6 py-3 font-semibold hover:brightness-95 transition">
+        Book a scoping call
+      </button>
+      <p class="text-xs text-slate/70 text-center">
+        This form isn't wired to a backend yet — next step is Resend or a Sheets webhook.
+      </p>
+    </form>
+  </section>
+</Layout>

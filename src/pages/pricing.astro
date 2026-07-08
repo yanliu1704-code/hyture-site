@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const bundles = [
+  {
+    name: 'Back Office Bundle',
+    desc: 'Bookkeeping L1/L2 + Administration L1 + Payroll L1.',
+    fit: 'Ideal for businesses that need reliable day-to-day support without the overhead of a full office manager and bookkeeper.',
+  },
+  {
+    name: 'Growth Bundle',
+    desc: 'Marketing L2 + Customer Service L2 + Administration L2.',
+    fit: 'Ideal for businesses in growth mode that need customer-facing and revenue-supporting functions.',
+  },
+  {
+    name: 'Ops Bundle',
+    desc: 'Operations & Procurement L2 + Administration L2 + Systems & Projects L1.',
+    fit: 'Ideal for businesses with supply chain or fulfilment complexity.',
+  },
+  {
+    name: '2IC Bundle (Full Service)',
+    desc: 'Any combination of L3 services across two or more areas.',
+    fit: 'Delivered as a fully integrated fractional leadership model.',
+    highlight: true,
+  },
+];
+
+const pricingRows = [
+  { tier: 'L1 — Core', model: 'Fixed monthly subscription', note: 'Transparent, predictable, no hidden fees.' },
+  { tier: 'L2 — Advanced', model: 'Monthly retainer, post-onboarding', note: 'Volume and complexity affect pricing.' },
+  { tier: 'L3 — Strategic', model: 'Bespoke retainer', note: 'Set after a consulting and scoping engagement.' },
+  { tier: 'Systems & Projects', model: 'Per-project or milestone + retainer', note: 'Quoted to the scope of the initiative.' },
+];
+
+const steps = {
+  l1: ['Choose your service area and tier', 'Complete the online onboarding form — 15 minutes', 'Grant access to your platforms (Xero, Google Workspace, etc.)', "Our team is operational within 5 business days"],
+  l2: ['Book a scoping call with a BPO consultant', 'Receive a tailored proposal and service agreement', 'Complete a structured 2-week onboarding', 'Go live on day 15'],
+  l3: ['Book an initial strategy session', 'We design your custom solution and present it within 2 weeks', 'Review, refine, and agree on scope and pricing', 'Begin a structured transition with your dedicated 2IC'],
+};
+---
+
+<Layout title="Pricing & bundles" description="Transparent tiered pricing, bundle discounts, and a straightforward path to get started with Hyture.">
+  <section class="mx-auto max-w-6xl px-6 pt-16 pb-4 md:pt-20">
+    <span class="inline-flex rounded-full bg-ink/5 border border-ink/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink/70">
+      Pricing
+    </span>
+    <h1 class="mt-6 font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
+      Priced to how much of your business you hand over.
+    </h1>
+    <p class="mt-5 text-slate text-lg leading-relaxed max-w-2xl">
+      Subscribe to a single service area, or bundle several for an integrated
+      solution and a discount. Nothing is priced by headcount — you're
+      buying an outcome.
+    </p>
+  </section>
+
+  <!-- PRICING MODEL TABLE -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="rounded-2xl border border-ink/10 overflow-hidden">
+      {pricingRows.map((row, i) => (
+        <div class={`grid sm:grid-cols-[180px_1fr_1.4fr] gap-4 sm:gap-8 px-6 py-5 items-center ${i !== pricingRows.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
+          <span class="font-semibold text-teal-dark text-sm">{row.tier}</span>
+          <span class="font-semibold">{row.model}</span>
+          <span class="text-slate text-sm">{row.note}</span>
+        </div>
+      ))}
+    </div>
+    <p class="mt-5 text-sm text-slate">All bundles include a multi-service discount of 10–20% depending on scope.</p>
+  </section>
+
+  <!-- BUNDLES -->
+  <section class="bg-ink text-sand py-20 md:py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+        Bundle it, and save.
+      </h2>
+      <div class="mt-12 grid sm:grid-cols-2 gap-5">
+        {bundles.map((b) => (
+          <div class={`rounded-2xl p-7 ${b.highlight ? 'border-2 border-teal bg-teal/10' : 'border border-sand/15 bg-sand/[0.04]'}`}>
+            <h3 class="font-[General_Sans] font-semibold text-xl">{b.name}</h3>
+            <p class="mt-2 text-sand/75 text-sm">{b.desc}</p>
+            <p class="mt-3 text-sand/60 text-sm leading-relaxed">{b.fit}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GETTING STARTED -->
+  <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+      Getting started, by tier.
+    </h2>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      {[
+        { label: 'L1 — Core', steps: steps.l1 },
+        { label: 'L2 — Advanced', steps: steps.l2 },
+        { label: 'L3 — Strategic', steps: steps.l3 },
+      ].map((col) => (
+        <div class="rounded-2xl border border-ink/10 p-7">
+          <span class="text-xs font-bold tracking-wide text-teal-dark">{col.label}</span>
+          <ol class="mt-4 space-y-4">
+            {col.steps.map((step, i) => (
+              <li class="flex gap-3">
+                <span class="w-6 h-6 rounded-full bg-ink text-sand text-xs font-bold flex items-center justify-center shrink-0">{i + 1}</span>
+                <span class="text-[0.93rem] text-ink/85 leading-snug">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="rounded-3xl bg-sand-dark/60 px-8 py-14 md:px-16 text-center">
+      <p class="text-xl md:text-2xl font-[General_Sans] font-semibold max-w-2xl mx-auto leading-snug">
+        "You didn't start your business to spend your days on admin, chasing
+        invoices, or worrying about compliance. We handle the complexity —
+        you build the business."
+      </p>
+      <a href="/contact" class="mt-8 inline-flex items-center rounded-full bg-ink text-sand px-7 py-3.5 font-semibold hover:bg-ink-light transition">
+        Book a scoping call
+      </a>
+    </div>
+  </section>
+</Layout>
