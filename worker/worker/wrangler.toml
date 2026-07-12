@@ -1,0 +1,13 @@
+name = "lzproxy-chat"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# Set this to your site's exact origin (no trailing slash), e.g.:
+# https://hyture-site.yanliu1704.workers.dev
+# or your custom domain once attached, e.g. https://lzproxy.com.au
+[vars]
+ALLOWED_ORIGIN = "https://hyture-site.yanliu1704.workers.dev"
+
+# DEEPSEEK_API_KEY is a secret — do NOT put it here.
+# Set it after deploying with:
+#   wrangler secret put DEEPSEEK_API_KEY

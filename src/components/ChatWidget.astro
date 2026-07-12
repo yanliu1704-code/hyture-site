@@ -1,6 +1,9 @@
 ---
+// Set this to your deployed Worker's URL after `wrangler deploy` in /worker.
+// e.g. "https://lzproxy-chat.<your-subdomain>.workers.dev"
+const CHAT_WORKER_URL = "https://lzproxy-chat.yanliu1704.workers.dev";
 ---
-<div id="lzproxy-chat-root" class="fixed bottom-5 right-5 z-[60]">
+<div id="lzproxy-chat-root" class="fixed bottom-5 right-5 z-[60]" data-worker-url={CHAT_WORKER_URL}>
   <button
     id="lzproxy-chat-toggle"
     class="flex items-center gap-2.5 rounded-full bg-ink text-sand pl-4 pr-5 py-3.5 shadow-lg hover:bg-ink-light transition-colors"
@@ -27,11 +30,13 @@
         book a scoping call — what can I help with?
       </div>
     </div>
+    <div id="lzproxy-chat-typing" class="hidden px-4 pb-2 text-xs text-slate">LZproxy assistant is typing…</div>
     <form id="lzproxy-chat-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
       <input
         id="lzproxy-chat-input"
         type="text"
         placeholder="Type a message…"
+        autocomplete="off"
         class="flex-1 rounded-full border border-ink/15 px-4 py-2 text-sm focus:outline-none focus:border-teal"
       />
       <button type="submit" class="w-9 h-9 shrink-0 rounded-full bg-teal flex items-center justify-center hover:bg-teal-dark transition-colors" aria-label="Send message">
@@ -42,36 +47,74 @@
 </div>
 
 <script>
+  const root = document.getElementById('lzproxy-chat-root');
+  const workerUrl = root?.dataset.workerUrl || '';
+
   const toggle = document.getElementById('lzproxy-chat-toggle');
   const panel = document.getElementById('lzproxy-chat-panel');
   const form = document.getElementById('lzproxy-chat-form') as HTMLFormElement | null;
   const input = document.getElementById('lzproxy-chat-input') as HTMLInputElement | null;
   const messages = document.getElementById('lzproxy-chat-messages');
+  const typingIndicator = document.getElementById('lzproxy-chat-typing');
+
+  // Keep a short rolling history in memory (not persisted) to send as context.
+  const history: { role: 'user' | 'assistant'; content: string }[] = [];
 
   toggle?.addEventListener('click', () => {
     const isHidden = panel?.classList.contains('hidden');
     panel?.classList.toggle('hidden');
     toggle.setAttribute('aria-expanded', String(isHidden));
+    if (isHidden) input?.focus();
   });
 
-  form?.addEventListener('submit', (e) => {
+  function addBubble(text: string, role: 'user' | 'assistant') {
+    if (!messages) return;
+    const bubble = document.createElement('div');
+    bubble.className =
+      role === 'user'
+        ? 'bg-ink text-sand rounded-xl rounded-tr-sm px-3.5 py-2.5 max-w-[85%] ml-auto'
+        : 'bg-sand-dark/60 rounded-xl rounded-tl-sm px-3.5 py-2.5 max-w-[85%] text-ink/85';
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const text = input?.value.trim();
     if (!text || !messages) return;
 
-    const userBubble = document.createElement('div');
-    userBubble.className = 'bg-ink text-sand rounded-xl rounded-tr-sm px-3.5 py-2.5 max-w-[85%] ml-auto';
-    userBubble.textContent = text;
-    messages.appendChild(userBubble);
-
-    // TODO: replace with a fetch() to the Cloudflare Worker proxying DeepSeek.
-    // This placeholder response keeps the widget demoable before that's wired up.
-    const replyBubble = document.createElement('div');
-    replyBubble.className = 'bg-sand-dark/60 rounded-xl rounded-tl-sm px-3.5 py-2.5 max-w-[85%] text-ink/85';
-    replyBubble.textContent = "Thanks — this widget isn't connected to the AI backend yet, but a scoping call is the fastest way to get an answer right now.";
-    messages.appendChild(replyBubble);
-
-    messages.scrollTop = messages.scrollHeight;
+    addBubble(text, 'user');
     if (input) input.value = '';
+
+    if (!workerUrl || workerUrl.includes('YOUR-SUBDOMAIN')) {
+      addBubble("This assistant isn't connected yet — set CHAT_WORKER_URL in ChatWidget.astro once the Worker is deployed. In the meantime, book a scoping call from the Contact page!", 'assistant');
+      return;
+    }
+
+    typingIndicator?.classList.remove('hidden');
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch(workerUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, history }),
+      });
+
+      const data = await res.json();
+      const reply = data?.reply || "Sorry, I didn't catch that — could you try again?";
+
+      history.push({ role: 'user', content: text });
+      history.push({ role: 'assistant', content: reply });
+
+      addBubble(reply, 'assistant');
+    } catch (err) {
+      addBubble("Sorry, something went wrong reaching the assistant. Please try again, or book a scoping call from the Contact page.", 'assistant');
+    } finally {
+      typingIndicator?.classList.add('hidden');
+      if (submitBtn) submitBtn.disabled = false;
+    }
   });
 </script>
