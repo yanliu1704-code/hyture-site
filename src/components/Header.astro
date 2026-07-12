@@ -1,8 +1,18 @@
 ---
 import Logo from './Logo.astro';
 
+const serviceLinks = [
+  { label: 'Bookkeeping & Financial Management', href: '/services/bookkeeping' },
+  { label: 'Administration & Executive Support', href: '/services/admin' },
+  { label: 'HR & Payroll', href: '/services/hr-payroll' },
+  { label: 'Operations & Procurement', href: '/services/operations' },
+  { label: 'Marketing', href: '/services/marketing' },
+  { label: 'Customer Service', href: '/services/customer-service' },
+  { label: 'Systems & Project Management', href: '/services/systems' },
+];
+
 const navItems = [
-  { label: 'Services', href: '/services' },
+  { label: 'Home', href: '/' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'How it works', href: '/how-it-works' },
   { label: 'About', href: '/about' },
@@ -14,7 +24,37 @@ const navItems = [
     <Logo />
 
     <nav class="hidden md:flex items-center gap-8">
-      {navItems.map((item) => (
+      <a href="/" class="text-[0.95rem] font-medium text-ink/80 hover:text-ink transition-colors">Home</a>
+
+      <div class="relative" id="services-dropdown-wrap">
+        <button
+          id="services-dropdown-toggle"
+          class="flex items-center gap-1.5 text-[0.95rem] font-medium text-ink/80 hover:text-ink transition-colors"
+          aria-expanded="false"
+          aria-controls="services-dropdown"
+        >
+          Services
+          <svg width="11" height="7" viewBox="0 0 11 7" fill="none" class="mt-px transition-transform" id="services-dropdown-chevron">
+            <path d="M1 1L5.5 5.5L10 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div
+          id="services-dropdown"
+          class="hidden absolute left-1/2 -translate-x-1/2 top-[calc(100%+14px)] w-[300px] rounded-xl bg-white border border-ink/10 shadow-xl p-2"
+        >
+          <a href="/services" class="block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-teal-dark hover:bg-sand-dark/50 transition-colors">
+            All service areas
+          </a>
+          <div class="my-1 border-t border-ink/8"></div>
+          {serviceLinks.map((s) => (
+            <a href={s.href} class="block rounded-lg px-3.5 py-2.5 text-[0.9rem] text-ink/85 hover:bg-sand-dark/50 transition-colors">
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {navItems.slice(1).map((item) => (
         <a
           href={item.href}
           class="text-[0.95rem] font-medium text-ink/80 hover:text-ink transition-colors"
@@ -47,7 +87,19 @@ const navItems = [
 
   <nav id="mobile-nav" class="md:hidden hidden border-t border-ink/10 bg-sand">
     <div class="mx-auto max-w-6xl px-6 py-4 flex flex-col gap-4">
-      {navItems.map((item) => (
+      <a href="/" class="text-ink font-medium">Home</a>
+
+      <div>
+        <span class="text-ink font-medium block mb-2">Services</span>
+        <div class="pl-3 flex flex-col gap-2.5 border-l border-ink/10">
+          <a href="/services" class="text-teal-dark font-semibold text-sm">All service areas</a>
+          {serviceLinks.map((s) => (
+            <a href={s.href} class="text-ink/80 text-sm">{s.label}</a>
+          ))}
+        </div>
+      </div>
+
+      {navItems.slice(1).map((item) => (
         <a href={item.href} class="text-ink font-medium">{item.label}</a>
       ))}
       <a href="/contact" class="inline-flex items-center rounded-full bg-ink text-sand px-5 py-2.5 text-sm font-semibold w-fit">
@@ -63,6 +115,27 @@ const navItems = [
   toggle?.addEventListener('click', () => {
     const isHidden = nav?.classList.contains('hidden');
     nav?.classList.toggle('hidden');
-    toggle.setAttribute('aria-expanded', String(isHidden));
+    toggle?.setAttribute('aria-expanded', String(isHidden));
+  });
+
+  const dropdownWrap = document.getElementById('services-dropdown-wrap');
+  const dropdownToggle = document.getElementById('services-dropdown-toggle');
+  const dropdown = document.getElementById('services-dropdown');
+  const chevron = document.getElementById('services-dropdown-chevron');
+
+  dropdownToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = dropdown?.classList.contains('hidden');
+    dropdown?.classList.toggle('hidden');
+    chevron?.classList.toggle('rotate-180');
+    dropdownToggle.setAttribute('aria-expanded', String(isHidden));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (dropdownWrap && !dropdownWrap.contains(e.target as Node)) {
+      dropdown?.classList.add('hidden');
+      chevron?.classList.remove('rotate-180');
+      dropdownToggle?.setAttribute('aria-expanded', 'false');
+    }
   });
 </script>

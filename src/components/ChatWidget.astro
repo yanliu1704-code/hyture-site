@@ -1,35 +1,35 @@
 ---
 ---
-<div id="hyture-chat-root" class="fixed bottom-5 right-5 z-[60]">
+<div id="lzproxy-chat-root" class="fixed bottom-5 right-5 z-[60]">
   <button
-    id="hyture-chat-toggle"
+    id="lzproxy-chat-toggle"
     class="flex items-center gap-2.5 rounded-full bg-ink text-sand pl-4 pr-5 py-3.5 shadow-lg hover:bg-ink-light transition-colors"
     aria-expanded="false"
-    aria-controls="hyture-chat-panel"
+    aria-controls="lzproxy-chat-panel"
   >
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path d="M2 10C2 5.58 5.58 2 10 2s8 3.58 8 8-3.58 8-8 8c-1.13 0-2.2-.23-3.18-.66L2 18l1.1-4.4C2.4 12.5 2 11.3 2 10Z" stroke="#00C2B8" stroke-width="1.5" stroke-linejoin="round"/>
     </svg>
-    <span class="text-sm font-semibold">Ask Hyture</span>
+    <span class="text-sm font-semibold">Ask LZproxy</span>
   </button>
 
   <div
-    id="hyture-chat-panel"
+    id="lzproxy-chat-panel"
     class="hidden absolute bottom-[64px] right-0 w-[340px] max-w-[88vw] rounded-2xl bg-white border border-ink/10 shadow-2xl overflow-hidden"
   >
     <div class="bg-ink text-sand px-5 py-4">
-      <p class="font-semibold text-sm">Hyture assistant</p>
+      <p class="font-semibold text-sm">LZproxy assistant</p>
       <p class="text-sand/60 text-xs mt-0.5">Usually replies in a couple of minutes</p>
     </div>
-    <div id="hyture-chat-messages" class="h-[280px] overflow-y-auto px-4 py-4 space-y-3 text-sm">
+    <div id="lzproxy-chat-messages" class="h-[280px] overflow-y-auto px-4 py-4 space-y-3 text-sm">
       <div class="bg-sand-dark/60 rounded-xl rounded-tl-sm px-3.5 py-2.5 max-w-[85%] text-ink/85">
-        Hi 👋 I'm the Hyture assistant. Ask me about our services, pricing, or
+        Hi 👋 I'm the LZproxy assistant. Ask me about our services, pricing, or
         book a scoping call — what can I help with?
       </div>
     </div>
-    <form id="hyture-chat-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
+    <form id="lzproxy-chat-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
       <input
-        id="hyture-chat-input"
+        id="lzproxy-chat-input"
         type="text"
         placeholder="Type a message…"
         class="flex-1 rounded-full border border-ink/15 px-4 py-2 text-sm focus:outline-none focus:border-teal"
@@ -42,11 +42,11 @@
 </div>
 
 <script>
-  const toggle = document.getElementById('hyture-chat-toggle');
-  const panel = document.getElementById('hyture-chat-panel');
-  const form = document.getElementById('hyture-chat-form') as HTMLFormElement | null;
-  const input = document.getElementById('hyture-chat-input') as HTMLInputElement | null;
-  const messages = document.getElementById('hyture-chat-messages');
+  const toggle = document.getElementById('lzproxy-chat-toggle');
+  const panel = document.getElementById('lzproxy-chat-panel');
+  const form = document.getElementById('lzproxy-chat-form') as HTMLFormElement | null;
+  const input = document.getElementById('lzproxy-chat-input') as HTMLInputElement | null;
+  const messages = document.getElementById('lzproxy-chat-messages');
 
   toggle?.addEventListener('click', () => {
     const isHidden = panel?.classList.contains('hidden');

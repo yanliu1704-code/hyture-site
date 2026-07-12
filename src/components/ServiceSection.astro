@@ -10,8 +10,9 @@ interface Props {
   name: string;
   intro: string;
   tiers: [Tier, Tier, Tier];
+  showHeader?: boolean;
 }
-const { id, number, name, intro, tiers } = Astro.props;
+const { id, number, name, intro, tiers, showHeader = true } = Astro.props;
 const tierStyles = [
   { badge: 'text-teal-dark', barWidth: 'w-10', barOpacity: 'bg-teal/40', border: 'border-ink/10' },
   { badge: 'text-teal-dark', barWidth: 'w-16', barOpacity: 'bg-teal/70', border: 'border-ink/10' },
@@ -20,11 +21,15 @@ const tierStyles = [
 ---
 
 <div id={id} class="scroll-mt-24 py-16 md:py-20 border-b border-ink/10 last:border-0">
-  <div class="flex items-baseline gap-4">
-    <span class="font-[General_Sans] text-sand-dark text-3xl font-bold text-ink/15">{number}</span>
-    <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight">{name}</h2>
-  </div>
-  <p class="mt-3 text-slate text-lg leading-relaxed max-w-2xl">{intro}</p>
+  {showHeader && (
+    <>
+      <div class="flex items-baseline gap-4">
+        <span class="font-[General_Sans] text-sand-dark text-3xl font-bold text-ink/15">{number}</span>
+        <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight">{name}</h2>
+      </div>
+      <p class="mt-3 text-slate text-lg leading-relaxed max-w-2xl">{intro}</p>
+    </>
+  )}
 
   <div class="mt-8 grid md:grid-cols-3 gap-5">
     {tiers.map((tier, i) => (

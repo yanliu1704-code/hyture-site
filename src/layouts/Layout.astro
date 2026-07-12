@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title,
-  description = "Hyture is the AI-powered 2IC for Australian small businesses — bookkeeping, admin, HR, ops, marketing and customer service, handled.",
+  description = "LZproxy is the AI-powered 2IC for Australian small businesses — bookkeeping, admin, HR, ops, marketing and customer service, handled.",
 } = Astro.props;
 ---
 
@@ -20,8 +20,10 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} · Hyture</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+    <title>{title} · LZproxy</title>
     <meta name="description" content={description} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

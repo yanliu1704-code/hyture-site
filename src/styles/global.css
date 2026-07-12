@@ -44,14 +44,3 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* The task-log ticker in the hero */
-@keyframes ticker-scroll {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
-}
-.ticker-track {
-  animation: ticker-scroll 14s linear infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track { animation: none; }
-}

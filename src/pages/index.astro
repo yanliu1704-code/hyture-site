@@ -1,32 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const serviceAreas = [
-  { id: 'bookkeeping', name: 'Bookkeeping & Financial', blurb: 'AP/AR, reconciliation, BAS lodgement — clean books, always current.' },
-  { id: 'admin', name: 'Administration & Executive Support', blurb: 'Inbox, calendar, documents, and the paperwork that used to eat your evenings.' },
-  { id: 'hr-payroll', name: 'HR & Payroll', blurb: 'Payroll, STP, super, Fair Work compliance — handled accurately and on time.' },
-  { id: 'operations', name: 'Operations & Procurement', blurb: 'Purchase orders, supplier management, inventory — kept moving.' },
-  { id: 'marketing', name: 'Marketing', blurb: 'Social, content, campaigns — a consistent presence without an in-house team.' },
-  { id: 'customer-service', name: 'Customer Service', blurb: 'Tickets, live chat, phone overflow — fast, on-brand, always covered.' },
-  { id: 'systems', name: 'Systems & Project Management', blurb: 'Migrations, new tools, complex initiatives — led from scoping to go-live.' },
-];
-
-const tickerLines = [
-  'Invoice #4521 reconciled — Xero',
-  'STP lodgement filed on time',
-  '3 support tickets closed — 12 min avg',
-  'Supplier PO #118 approved',
-  'Payroll run complete — 14 staff',
-  'BAS draft ready for review',
-  'Onboarding checklist sent — new hire',
-  'Weekly cashflow forecast updated',
-];
+import { services } from '../data/services';
 
 const differentiators = [
   { title: 'AI backbone, human judgement', body: 'Automation handles the repetitive. Our team handles the nuanced calls that actually need a person.' },
   { title: 'Solution-first, not headcount-first', body: "You're buying an outcome, not another line on the payroll." },
   { title: 'Built for Australian compliance', body: 'Fair Work, STP, BAS, GST — the rules are already baked into how we work.' },
   { title: 'No lock-in to start', body: 'Cancel your entry-tier service anytime with 30 days notice. No long contracts to test the waters.' },
+];
+
+const glance = [
+  { label: '7 service areas', body: 'Bookkeeping to systems, available on their own or bundled.' },
+  { label: '3 tiers per area', body: 'Start with one defined task, grow into a fractional 2IC.' },
+  { label: 'Human-reviewed, always', body: 'Every output is checked by a named person before it reaches you.' },
+  { label: 'Live in 5 business days', body: 'For L1 services — onboard online, we take it from there.' },
 ];
 ---
 
@@ -43,7 +30,7 @@ const differentiators = [
           Let your <span class="text-teal-dark">2IC</span> run the rest.
         </h1>
         <p class="mt-6 text-lg text-slate leading-relaxed max-w-lg">
-          Hyture is an AI-powered second-in-command for small business —
+          LZproxy is an AI-powered second-in-command for small business —
           bookkeeping, admin, HR, ops, marketing and customer service,
           handled by automation and reviewed by real people, every time.
         </p>
@@ -58,28 +45,26 @@ const differentiators = [
         </div>
       </div>
 
-      <!-- Signature element: a quiet "operations console" showing the AI+human workflow in motion -->
+      <!-- Signature element: a calm "at a glance" snapshot of how the 2IC model works -->
       <div class="relative">
         <div class="rounded-2xl bg-ink text-sand shadow-xl overflow-hidden">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-sand/10">
+          <div class="flex items-center gap-2 px-5 py-4 border-b border-sand/10">
             <span class="w-2.5 h-2.5 rounded-full bg-teal"></span>
-            <span class="text-xs font-semibold tracking-wide text-sand/70">2IC operations feed — live</span>
+            <span class="text-xs font-semibold tracking-wide text-sand/70">Your 2IC, at a glance</span>
           </div>
-          <div class="h-[280px] overflow-hidden relative px-5 py-4">
-            <div class="ticker-track">
-              {[...tickerLines, ...tickerLines].map((line) => (
-                <div class="flex items-center gap-3 py-2.5 border-b border-sand/8 text-[0.92rem]">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="shrink-0">
-                    <circle cx="7" cy="7" r="6.3" stroke="#00C2B8" stroke-width="1.3"/>
-                    <path d="M4.2 7.2L6 9L9.8 5" stroke="#00C2B8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span class="text-sand/85">{line}</span>
+          <div class="px-5 py-5 space-y-5">
+            {glance.map((g) => (
+              <div class="flex gap-3.5">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="shrink-0 mt-0.5">
+                  <circle cx="9" cy="9" r="8" stroke="#00C2B8" stroke-width="1.4"/>
+                  <path d="M5.4 9.2L7.7 11.5L12.6 6.3" stroke="#00C2B8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div>
+                  <p class="font-semibold text-sand text-[0.95rem]">{g.label}</p>
+                  <p class="text-sand/60 text-sm mt-0.5">{g.body}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div class="px-5 py-3.5 border-t border-sand/10 text-xs text-sand/55">
-            Every line reviewed by a named human before it reaches you.
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -107,7 +92,7 @@ const differentiators = [
       </h2>
       <p class="mt-4 text-slate text-lg leading-relaxed">
         Chasing invoices, wrangling rosters, keeping the books straight — it's
-        necessary, but it's not the job. Hyture takes it off your plate.
+        necessary, but it's not the job. LZproxy takes it off your plate.
       </p>
     </div>
 
@@ -145,8 +130,8 @@ const differentiators = [
       </div>
 
       <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {serviceAreas.map((s) => (
-          <a href={`/services#${s.id}`} class="group rounded-xl bg-sand/[0.06] border border-sand/10 p-6 hover:bg-sand/[0.1] hover:border-teal/40 transition-colors">
+        {services.map((s) => (
+          <a href={`/services/${s.id}`} class="group rounded-xl bg-sand/[0.06] border border-sand/10 p-6 hover:bg-sand/[0.1] hover:border-teal/40 transition-colors">
             <h3 class="font-semibold text-lg group-hover:text-teal transition-colors">{s.name}</h3>
             <p class="mt-2 text-sand/65 text-[0.95rem] leading-relaxed">{s.blurb}</p>
           </a>

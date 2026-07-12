@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServiceSection from '../../components/ServiceSection.astro';
+import { services } from '../../data/services';
+
+const service = services.find((s) => s.id === 'marketing')!;
+const otherServices = services.filter((s) => s.id !== 'marketing');
+---
+
+<Layout title={service.name} description={service.intro}>
+  <section class="mx-auto max-w-5xl px-6 pt-16 pb-4 md:pt-20">
+    <a href="/services" class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate hover:text-teal-dark transition-colors">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M2 7L6 3M2 7L6 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      All service areas
+    </a>
+    <span class="mt-6 inline-flex rounded-full bg-ink/5 border border-ink/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink/70">
+      Service area {service.number}
+    </span>
+    <h1 class="mt-6 font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-2xl">
+      {service.name}
+    </h1>
+    <p class="mt-5 text-slate text-lg leading-relaxed max-w-2xl">
+      {service.intro}
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-8">
+    <ServiceSection id={service.id} number={service.number} name={service.name} intro="" tiers={service.tiers as any} showHeader={false} />
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <div class="rounded-3xl bg-ink text-sand px-8 py-12 md:px-14 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-lg text-center md:text-left">
+        <h2 class="font-[General_Sans] font-bold text-2xl tracking-tight">Ready to hand this off?</h2>
+        <p class="mt-2 text-sand/70">Book a free scoping call and we'll map out the right tier to start with.</p>
+      </div>
+      <a href="/contact" class="inline-flex items-center rounded-full bg-amber text-ink px-7 py-3.5 font-semibold hover:brightness-95 transition shrink-0">
+        Book a scoping call
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 pb-24">
+    <h2 class="font-[General_Sans] font-semibold text-xl mb-5">Other service areas</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {otherServices.map((s) => (
+        <a href={`/services/${s.id}`} class="rounded-xl border border-ink/10 p-5 hover:border-teal/50 hover:bg-sand-dark/30 transition-colors">
+          <h3 class="font-semibold">{s.name}</h3>
+          <p class="mt-1.5 text-slate text-sm leading-snug">{s.blurb}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
