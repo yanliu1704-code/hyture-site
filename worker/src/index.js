@@ -242,6 +242,7 @@ export default {
         const choice = data?.choices?.[0]?.message;
 
         if (!choice) {
+          console.log('No choice/message in response:', JSON.stringify(data).slice(0, 1500));
           finalReply = "Sorry, I didn't catch that — could you rephrase?";
           break;
         }
@@ -275,7 +276,11 @@ export default {
           continue; // loop again so the model can respond to tool results
         }
 
-        finalReply = (choice.content || '').trim() || "Sorry, I didn't catch that — could you rephrase?";
+        finalReply = (choice.content || '').trim();
+        if (!finalReply) {
+          console.log('Empty/no content. finish_reason:', data?.choices?.[0]?.finish_reason, '| full response:', JSON.stringify(data).slice(0, 1500));
+          finalReply = "Sorry, I didn't catch that — could you rephrase?";
+        }
         break;
       }
 
