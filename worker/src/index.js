@@ -100,9 +100,9 @@ function corsHeaders(origin) {
 
 async function checkAvailability(env, args) {
   try {
-    const startTime = `${args.start_date}T00:00:00Z`;
-    const endTime = `${args.end_date}T23:59:59Z`;
-    const url = `${CAL_API_BASE}/slots?username=${encodeURIComponent(env.CAL_USERNAME)}&eventTypeSlug=${encodeURIComponent(env.CAL_EVENT_SLUG)}&startTime=${startTime}&endTime=${endTime}`;
+    const start = `${args.start_date}T00:00:00Z`;
+    const end = `${args.end_date}T23:59:59Z`;
+    const url = `${CAL_API_BASE}/slots?username=${encodeURIComponent(env.CAL_USERNAME)}&eventTypeSlug=${encodeURIComponent(env.CAL_EVENT_SLUG)}&start=${start}&end=${end}`;
 
     const res = await fetch(url, {
       headers: {
