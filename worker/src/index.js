@@ -18,10 +18,10 @@
 
 const CAL_API_BASE = 'https://api.cal.com/v2';
 
-function systemPrompt(todayIso) {
+function systemPrompt(todayIso, todayWeekday) {
   return `You are the website assistant for LZproxy, an AI-powered "2IC" (second-in-command) business operations service for Australian small and medium businesses.
 
-TODAY'S DATE: ${todayIso} (Australia/Sydney). Use this to resolve relative dates like "tomorrow" or "next Tuesday".
+TODAY'S DATE: ${todayIso}, which is a ${todayWeekday}, in Australia/Sydney time. Use this — not any other assumption — to resolve relative dates like "tomorrow", "Tuesday", or "next Tuesday". "Tuesday" with no qualifier means the next upcoming Tuesday from today (if today is already Tuesday, treat "Tuesday" as today).
 
 TONE: trusted, capable, quietly confident. Plain, direct sentences. Never use AI-hype language ("revolutionary", "game-changing", "supercharge", etc). Never oversell.
 
@@ -118,8 +118,8 @@ async function checkAvailability(env, args) {
     }
 
     const data = await res.json();
-    const slotsByDate = data?.data?.slots || {};
-    const flat = Object.values(slotsByDate).flat().map((s) => s.time);
+    const slotsByDate = data?.data || {};
+    const flat = Object.values(slotsByDate).flat().map((s) => s.start);
 
     return { available_slots: flat.slice(0, 20) };
   } catch (err) {
@@ -223,9 +223,11 @@ export default {
       .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
       .map((m) => ({ role: m.role, content: m.content.slice(0, 800) }));
 
-    const todayIso = new Date().toISOString().slice(0, 10);
+    const nowSydney = new Date(new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
+    const todayIso = nowSydney.toLocaleDateString('en-CA', { timeZone: 'Australia/Sydney' }); // en-CA gives YYYY-MM-DD
+    const todayWeekday = nowSydney.toLocaleDateString('en-US', { timeZone: 'Australia/Sydney', weekday: 'long' });
     const messages = [
-      { role: 'system', content: systemPrompt(todayIso) },
+      { role: 'system', content: systemPrompt(todayIso, todayWeekday) },
       ...trimmedHistory,
       { role: 'user', content: message },
     ];
@@ -235,7 +237,7 @@ export default {
       // calls it requests, feeding results back, until it gives a plain
       // text answer. Capped to avoid runaway loops.
       let finalReply = null;
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 6; i++) {
         const data = await callDeepSeek(env, messages);
         const choice = data?.choices?.[0]?.message;
 
