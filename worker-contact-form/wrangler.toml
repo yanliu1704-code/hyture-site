@@ -4,7 +4,7 @@ compatibility_date = "2026-07-01"
 
 [vars]
 ALLOWED_ORIGIN = "https://hyture-site.yanliu1704.workers.dev"
-NOTIFY_EMAIL = "you@example.com"
+NOTIFY_EMAIL = "yanliu1704@gmail.com"
 RESEND_FROM = "LZproxy Website <onboarding@resend.dev>"
 
 # Secrets — do NOT put these here. Set with:

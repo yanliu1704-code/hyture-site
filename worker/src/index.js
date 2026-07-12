@@ -41,11 +41,12 @@ TIER STRUCTURE: L1 Core (fixed monthly subscription, cancel anytime, live in 5 b
 BOOKING MEETINGS — you can do this for real, directly in chat:
 1. When someone wants to book a scoping call, ask what day/time range works for them (assume Australia/Sydney time unless they say otherwise).
 2. Call check_availability with that date range to get REAL open slots. Never invent or guess times.
-3. Present 3-5 options from the actual results, in a friendly readable format (e.g. "Tuesday 2pm" not raw ISO strings).
-4. Once they pick a slot, ask for their name and email if you don't have them yet.
-5. Call book_meeting with the EXACT start_time string returned by check_availability for that slot — never modify or invent a time.
-6. Confirm the booking succeeded and mention they'll get a calendar invite by email.
-7. If book_meeting fails (e.g. slot just got taken), apologize, call check_availability again, and offer new options.
+3. Each returned slot already includes a "sydney_label" (human-readable, already in Sydney time) — just show these directly, do NOT do any timezone math or conversion yourself.
+4. Present 3-5 options using the sydney_label values.
+5. Once they pick a slot, ask for their name and email if you don't have them yet.
+6. Call book_meeting with the "start_time" value (the raw one, not the label) from that same slot — never modify or invent it.
+7. Confirm the booking succeeded and mention they'll get a calendar invite by email.
+8. If book_meeting fails (e.g. slot just got taken), apologize, call check_availability again, and offer new options.
 
 OTHER RULES:
 - Naturally qualify leads even if not booking yet: ask for name/business/email once interest is clear.
@@ -59,7 +60,7 @@ const TOOLS = [
     type: 'function',
     function: {
       name: 'check_availability',
-      description: "Look up real open time slots on LZproxy's booking calendar for a date range. Always call this before offering times to a visitor.",
+      description: "Look up real open time slots on LZproxy's booking calendar for a date range. Returns each slot with a ready-to-use 'sydney_label' (already converted to Sydney local time — just show this to the visitor, never recalculate it yourself) and a 'start_time' (raw UTC ISO string — pass this back unmodified to book_meeting).",
       parameters: {
         type: 'object',
         properties: {
@@ -121,7 +122,23 @@ async function checkAvailability(env, args) {
     const slotsByDate = data?.data || {};
     const flat = Object.values(slotsByDate).flat().map((s) => s.start);
 
-    return { available_slots: flat.slice(0, 20) };
+    // Do the UTC → Sydney conversion here, server-side, so the model never
+    // has to do timezone arithmetic itself (which burns tokens and is
+    // error-prone). Give it ready-to-use labels instead.
+    const slots = flat.slice(0, 20).map((iso) => ({
+      start_time: iso,
+      sydney_label: new Date(iso).toLocaleString('en-AU', {
+        timeZone: 'Australia/Sydney',
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      }),
+    }));
+
+    return { available_slots: slots };
   } catch (err) {
     console.error('checkAvailability error:', err);
     return { error: 'Could not fetch availability right now.' };
@@ -175,7 +192,8 @@ async function callDeepSeek(env, messages) {
       messages,
       tools: TOOLS,
       temperature: 1.0,
-      max_tokens: 400,
+      max_tokens: 500,
+      thinking: { type: 'disabled' },
     }),
   });
 
@@ -278,7 +296,7 @@ export default {
 
         finalReply = (choice.content || '').trim();
         if (!finalReply) {
-          console.log('Empty/no content. finish_reason:', data?.choices?.[0]?.finish_reason, '| full response:', JSON.stringify(data).slice(0, 1500));
+          console.log('Empty content. finish_reason:', data?.choices?.[0]?.finish_reason, '| full response:', JSON.stringify(data).slice(0, 1500));
           finalReply = "Sorry, I didn't catch that — could you rephrase?";
         }
         break;
