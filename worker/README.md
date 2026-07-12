@@ -1,72 +1,68 @@
 # LZproxy chat worker
 
-This is the backend for the "Ask LZproxy" chat widget. It's a small Cloudflare
-Worker that receives a message from the widget, adds a system prompt grounded
-in LZproxy's actual services/tiers, and forwards it to DeepSeek.
+Backend for the "Ask LZproxy" chat widget. It proxies messages to DeepSeek
+with a grounded system prompt, and gives the model two real tools so it can
+check your Cal.com calendar and create actual bookings — entirely in chat,
+no redirect needed.
 
 ## 1. Get a DeepSeek API key
+(unchanged from before — see platform.deepseek.com)
 
-1. Sign up / log in at https://platform.deepseek.com
-2. Go to API keys → create a new key (starts with `sk-`)
-3. Top up a small amount of credit (this is extremely cheap — a few cents
-   covers thousands of typical chat replies on `deepseek-v4-flash`)
+## 2. Get a Cal.com API key
 
-## 2. Install Wrangler (Cloudflare's CLI) if you haven't already
+1. In Cal.com: Settings → Developer → API Keys → create one
+2. Copy it (starts with `cal_live_...`)
 
-```bash
-npm install -g wrangler
-wrangler login
+## 3. Confirm your username and event slug
+
+These are already prefilled in `wrangler.toml` based on your booking page
+URL (`cal.com/sammi-liu-5ti03s/scoping-call`), but double check:
+```toml
+CAL_USERNAME = "sammi-liu-5ti03s"
+CAL_EVENT_SLUG = "scoping-call"
 ```
 
-## 3. Deploy the worker
+## 4. Deploy
 
 ```bash
 cd worker
 wrangler deploy
 ```
 
-This will print a URL like:
-```
-https://lzproxy-chat.<your-subdomain>.workers.dev
-```
-Copy that URL.
-
-## 4. Set your DeepSeek API key as a secret (never commit it to git)
+## 5. Set your secrets
 
 ```bash
 wrangler secret put DEEPSEEK_API_KEY
+wrangler secret put CAL_API_KEY
 ```
-Paste your `sk-...` key when prompted.
 
-## 5. Confirm the allowed origin
+## 6. Point the chat widget at this worker
 
-Open `wrangler.toml` and check `ALLOWED_ORIGIN` matches your live site's exact
-URL (no trailing slash) — it's already set to the current
-`hyture-site.yanliu1704.workers.dev` URL. Update this if you later attach a
-custom domain, then run `wrangler deploy` again.
+(unchanged — set `CHAT_WORKER_URL` in `src/components/ChatWidget.astro` to
+the URL `wrangler deploy` gives you)
 
-## 6. Point the chat widget at your worker
+## How the booking flow works
 
-In `src/components/ChatWidget.astro`, find this line near the top:
-```js
-const CHAT_WORKER_URL = "https://lzproxy-chat.YOUR-SUBDOMAIN.workers.dev";
-```
-Replace it with the actual URL from step 3. Commit and push — Cloudflare
-Pages will redeploy your site automatically, and the widget will now talk to
-the real assistant.
+1. Visitor says something like "I'd like to book a call"
+2. The model asks what day/time range suits them
+3. It calls `check_availability` — a real request to your Cal.com calendar,
+   so it only ever offers times that are genuinely free
+4. Once they pick a slot and give a name + email, it calls `book_meeting` —
+   a real request that creates the booking, exactly like using the embedded
+   calendar, so both of you get the usual Cal.com confirmation emails and
+   calendar invites
+5. If the slot got taken in the meantime, it re-checks and offers new times
+
+## Testing it
+
+After deploying, open the chat widget and try:
+> "Can I book a scoping call sometime this week?"
+
+Watch it ask a clarifying question, offer real times, then actually create
+a booking once you give a name and email — check your Cal.com dashboard or
+your calendar to confirm it landed.
 
 ## Cost
 
-DeepSeek's `deepseek-v4-flash` model is priced per token and is very cheap —
-realistically a few dollars a month even with heavy traffic, since each
-chat reply is capped at 300 tokens and the system prompt is short. Cloudflare
-Workers' free tier covers 100,000 requests/day, which is far more than a
-small business site will need.
-
-## Optional: rate limiting
-
-To stop abuse (someone spamming the widget to run up your DeepSeek bill),
-add a Cloudflare **Rate Limiting Rule** in the dashboard:
-Security → WAF → Rate limiting rules → Create rule, scoped to this Worker's
-route, e.g. "block after 20 requests per minute per IP". No code change
-needed — this is a dashboard-only setting.
+Same as before (DeepSeek is cheap per token) — Cal.com's API is included
+free with your existing free plan, no extra cost.
