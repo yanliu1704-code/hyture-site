@@ -1,6 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const servicePricing = [
+  { name: 'Bookkeeping & Financial Management', price: '$2,400/mo', note: 'Regulatory risk and specialist expertise' },
+  { name: 'HR & Payroll', price: '$2,400/mo', note: 'Compliance risk and legal exposure' },
+  { name: 'Administration & Executive Support', price: '$2,000/mo', note: 'Baseline' },
+  { name: 'Operations & Procurement', price: '$2,000/mo', note: 'Baseline' },
+  { name: 'Customer Service', price: '$2,000/mo', note: 'Baseline' },
+  { name: 'Marketing', price: '$1,800/mo', note: 'Lower compliance load, more scalable' },
+  { name: 'Systems & Project Management', price: 'Project quote', note: 'Scoped per project, not a subscription' },
+];
+
 const bundles = [
   {
     name: 'Back Office Bundle',
@@ -25,13 +35,6 @@ const bundles = [
   },
 ];
 
-const pricingRows = [
-  { tier: 'L1 — Core', model: 'Fixed monthly subscription', note: 'Transparent, predictable, no hidden fees.' },
-  { tier: 'L2 — Advanced', model: 'Monthly retainer, post-onboarding', note: 'Volume and complexity affect pricing.' },
-  { tier: 'L3 — Strategic', model: 'Bespoke retainer', note: 'Set after a consulting and scoping engagement.' },
-  { tier: 'Systems & Projects', model: 'Per-project or milestone + retainer', note: 'Quoted to the scope of the initiative.' },
-];
-
 const steps = {
   l1: ['Choose your service area and tier', 'Complete the online onboarding form — 15 minutes', 'Grant access to your platforms (Xero, Google Workspace, etc.)', "Our team is operational within 5 business days"],
   l2: ['Book a scoping call with a BPO consultant', 'Receive a tailored proposal and service agreement', 'Complete a structured 2-week onboarding', 'Go live on day 15'],
@@ -54,18 +57,20 @@ const steps = {
     </p>
   </section>
 
-  <!-- PRICING MODEL TABLE -->
+  <!-- L1 PRICING BY SERVICE AREA -->
   <section class="mx-auto max-w-6xl px-6 py-14">
+    <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight mb-2">L1 — Core pricing by service area</h2>
+    <p class="text-slate mb-8 max-w-2xl">Fixed monthly subscription, cancel anytime with 30 days notice. Areas with real compliance and regulatory risk are priced slightly higher than lower-risk, more scalable work.</p>
     <div class="rounded-2xl border border-ink/10 overflow-hidden">
-      {pricingRows.map((row, i) => (
-        <div class={`grid sm:grid-cols-[180px_1fr_1.4fr] gap-4 sm:gap-8 px-6 py-5 items-center ${i !== pricingRows.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
-          <span class="font-semibold text-teal-dark text-sm">{row.tier}</span>
-          <span class="font-semibold">{row.model}</span>
+      {servicePricing.map((row, i) => (
+        <div class={`grid sm:grid-cols-[1fr_140px_1fr] gap-4 sm:gap-8 px-6 py-5 items-center ${i !== servicePricing.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
+          <span class="font-semibold">{row.name}</span>
+          <span class="font-bold text-teal-dark">{row.price}</span>
           <span class="text-slate text-sm">{row.note}</span>
         </div>
       ))}
     </div>
-    <p class="mt-5 text-sm text-slate">All bundles include a multi-service discount of 10–20% depending on scope.</p>
+    <p class="mt-5 text-sm text-slate">L2 and L3 are scoped during a consult, since scope varies by volume and complexity. All bundles include a multi-service discount of 10-20%.</p>
   </section>
 
   <!-- BUNDLES -->
