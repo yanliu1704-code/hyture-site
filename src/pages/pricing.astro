@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BundleCalculator from '../components/BundleCalculator.astro';
 
 const servicePricing = [
   { name: 'Bookkeeping & Financial Management', price: '$2,400/mo', note: 'Regulatory risk and specialist expertise' },
@@ -71,6 +72,11 @@ const steps = {
       ))}
     </div>
     <p class="mt-5 text-sm text-slate">L2 and L3 are scoped during a consult, since scope varies by volume and complexity. All bundles include a multi-service discount of 10-20%.</p>
+  </section>
+
+  <!-- BUNDLE CALCULATOR -->
+  <section class="mx-auto max-w-6xl px-6 pb-14">
+    <BundleCalculator />
   </section>
 
   <!-- BUNDLES -->

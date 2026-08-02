@@ -1,0 +1,97 @@
+---
+const services = [
+  { id: 'bookkeeping', name: 'Bookkeeping & Financial Management', price: 2400 },
+  { id: 'hr-payroll', name: 'HR & Payroll', price: 2400 },
+  { id: 'admin', name: 'Administration & Executive Support', price: 2000 },
+  { id: 'operations', name: 'Operations & Procurement', price: 2000 },
+  { id: 'customer-service', name: 'Customer Service', price: 2000 },
+  { id: 'marketing', name: 'Marketing', price: 1800 },
+];
+---
+
+<div class="rounded-2xl border-2 border-teal bg-teal/5 p-6 md:p-8">
+  <div class="flex items-baseline justify-between flex-wrap gap-2">
+    <h3 class="font-[General_Sans] font-bold text-xl">Estimate your bundle</h3>
+    <span class="text-xs text-slate">L1 tier · estimate only, confirmed in a scoping call</span>
+  </div>
+
+  <div class="mt-6 grid sm:grid-cols-2 gap-3">
+    {services.map((s) => (
+      <label
+        class="flex items-center justify-between gap-3 rounded-xl border border-ink/10 bg-white px-4 py-3 cursor-pointer hover:border-teal/50 transition-colors has-[:checked]:border-teal has-[:checked]:bg-teal/10"
+      >
+        <span class="flex items-center gap-3">
+          <input type="checkbox" class="bundle-calc-checkbox w-4 h-4 accent-[#4FAE7F]" data-price={s.price} />
+          <span class="text-sm font-medium">{s.name}</span>
+        </span>
+        <span class="text-sm font-semibold text-teal-dark whitespace-nowrap">${s.price.toLocaleString()}/mo</span>
+      </label>
+    ))}
+  </div>
+
+  <p class="mt-4 text-xs text-slate">
+    Also interested in Systems & Project Management? That's quoted per project — mention it on your scoping call.
+  </p>
+
+  <div class="mt-6 pt-6 border-t border-ink/10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <div>
+      <div class="flex items-baseline gap-2 text-sm text-slate">
+        <span>Subtotal:</span>
+        <span id="bundle-calc-subtotal" class="font-semibold text-ink">$0/mo</span>
+      </div>
+      <div id="bundle-calc-discount-row" class="hidden flex items-baseline gap-2 text-sm text-teal-dark mt-1">
+        <span id="bundle-calc-discount-label">Bundle discount (10%):</span>
+        <span id="bundle-calc-discount-amount" class="font-semibold">−$0/mo</span>
+      </div>
+      <div class="flex items-baseline gap-2 mt-2">
+        <span class="text-sm text-slate">Estimated total:</span>
+        <span id="bundle-calc-total" class="text-2xl font-[General_Sans] font-bold">$0/mo</span>
+      </div>
+    </div>
+    <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-ink text-sand px-6 py-3 text-sm font-semibold hover:bg-ink-light transition shrink-0">
+      Book a scoping call
+    </a>
+  </div>
+</div>
+
+<script>
+  const checkboxes = document.querySelectorAll<HTMLInputElement>('.bundle-calc-checkbox');
+  const subtotalEl = document.getElementById('bundle-calc-subtotal');
+  const totalEl = document.getElementById('bundle-calc-total');
+  const discountRow = document.getElementById('bundle-calc-discount-row');
+  const discountLabel = document.getElementById('bundle-calc-discount-label');
+  const discountAmountEl = document.getElementById('bundle-calc-discount-amount');
+
+  function discountRateFor(count: number) {
+    if (count >= 5) return 0.2;
+    if (count >= 3) return 0.15;
+    if (count >= 2) return 0.1;
+    return 0;
+  }
+
+  function formatMoney(n: number) {
+    return `$${Math.round(n).toLocaleString()}/mo`;
+  }
+
+  function recalc() {
+    const checked = Array.from(checkboxes).filter((cb) => cb.checked);
+    const subtotal = checked.reduce((sum, cb) => sum + Number(cb.dataset.price || 0), 0);
+    const rate = discountRateFor(checked.length);
+    const discount = subtotal * rate;
+    const total = subtotal - discount;
+
+    if (subtotalEl) subtotalEl.textContent = formatMoney(subtotal);
+    if (totalEl) totalEl.textContent = formatMoney(total);
+
+    if (rate > 0 && discountRow && discountLabel && discountAmountEl) {
+      discountRow.classList.remove('hidden');
+      discountLabel.textContent = `Bundle discount (${Math.round(rate * 100)}%):`;
+      discountAmountEl.textContent = `−${formatMoney(discount)}`;
+    } else {
+      discountRow?.classList.add('hidden');
+    }
+  }
+
+  checkboxes.forEach((cb) => cb.addEventListener('change', recalc));
+  recalc();
+</script>
