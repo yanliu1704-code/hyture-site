@@ -4,24 +4,32 @@ import { services } from '../data/services';
 ---
 
 <Layout title="Service areas" description="Seven service areas, each scaling from a single defined task to a fractional leadership role — bookkeeping, admin, HR, operations, marketing, customer service, and systems.">
-  <section class="mx-auto max-w-6xl px-6 pt-16 pb-8 md:pt-20">    <h1 class="font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
-      Seven areas. Three tiers each. One 2IC.
-    </h1>
-    <p class="mt-5 text-slate text-lg leading-relaxed max-w-2xl">
-      Every area is available on its own or bundled together. Tiers build on
-      each other — L2 includes everything in L1, and L3 includes everything
-      in L1 and L2. Click into any area for the full breakdown.
-    </p>
+  <section class="mx-auto max-w-6xl px-6 pt-16 pb-8 md:pt-20">
+    <div class="reveal">
+      <h1 class="font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
+        Seven areas. Three tiers each. One 2IC.
+      </h1>
+      <p class="mt-5 text-slate text-xl leading-relaxed max-w-2xl" style="font-family: Georgia, serif;">
+        Every area stands alone, or bundles together. Click into any one for the full breakdown.
+      </p>
+    </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-6 py-8">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {services.map((s) => (
-        <a href={`/services/${s.id}`} class="group rounded-2xl border border-ink/10 p-6 hover:border-teal/50 hover:bg-sand-dark/30 transition-colors">
-          <span class="text-xs font-bold tracking-wide text-teal-dark">{s.number}</span>
-          <h2 class="mt-2 font-[General_Sans] font-semibold text-xl group-hover:text-teal-dark transition-colors">{s.name}</h2>
-          <p class="mt-2 text-slate text-[0.95rem] leading-relaxed">{s.blurb}</p>
-          <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink/70 group-hover:text-teal-dark transition-colors">
+      {services.map((s, i) => (
+        <a
+          href={`/services/${s.id}`}
+          class={`group rounded-2xl border p-6 transition-colors card-lift reveal reveal-delay-${(i % 3) + 1} ${
+            i === 3
+              ? 'bg-ink text-sand border-ink'
+              : 'border-ink/10 hover:border-teal/50 hover:bg-sand-dark/30'
+          } ${i % 3 === 1 ? 'lg:mt-6' : ''}`}
+        >
+          <span class={`text-xs font-bold tracking-wide ${i === 3 ? 'text-teal' : 'text-teal-dark'}`}>{s.number}</span>
+          <h2 class={`mt-2 font-[General_Sans] font-semibold text-xl transition-colors ${i === 3 ? '' : 'group-hover:text-teal-dark'}`}>{s.name}</h2>
+          <p class={`mt-2 text-[0.95rem] leading-relaxed ${i === 3 ? 'text-sand/70' : 'text-slate'}`}>{s.blurb}</p>
+          <span class={`mt-4 inline-flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5 ${i === 3 ? 'text-teal' : 'text-ink/70 group-hover:text-teal-dark'}`}>
             See full breakdown
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </span>
@@ -31,12 +39,12 @@ import { services } from '../data/services';
   </section>
 
   <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-    <div class="rounded-3xl bg-ink text-sand px-8 py-14 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+    <div class="rounded-3xl bg-ink text-sand px-8 py-14 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8 reveal">
       <div class="max-w-lg text-center md:text-left">
         <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight">Not sure which area to start with?</h2>
         <p class="mt-3 text-sand/70">A scoping call is free — we'll help you figure out what to hand over first.</p>
       </div>
-      <a href="/contact" class="inline-flex items-center rounded-full bg-amber text-ink px-7 py-3.5 font-semibold hover:brightness-95 transition shrink-0">
+      <a href="/contact" class="inline-flex items-center rounded-full bg-amber text-ink px-7 py-3.5 font-semibold hover:brightness-95 hover:-translate-y-0.5 transition-all shrink-0">
         Book a scoping call
       </a>
     </div>

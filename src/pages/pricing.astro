@@ -44,23 +44,23 @@ const steps = {
 ---
 
 <Layout title="Pricing & bundles" description="Transparent tiered pricing, bundle discounts, and a straightforward path to get started with Neuronex.">
-  <section class="mx-auto max-w-6xl px-6 pt-16 pb-4 md:pt-20">    <h1 class="font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
-      Priced to how much of your business you hand over.
-    </h1>
-    <p class="mt-5 text-slate text-lg leading-relaxed max-w-2xl">
-      Subscribe to a single service area, or bundle several for an integrated
-      solution and a discount. Nothing is priced by headcount — you're
-      buying an outcome.
-    </p>
+  <section class="mx-auto max-w-6xl px-6 pt-16 pb-4 md:pt-20">
+    <div class="reveal">
+      <h1 class="font-[General_Sans] font-bold text-4xl md:text-5xl tracking-tight max-w-3xl">
+        Priced to how much of your business you hand over.
+      </h1>
+      <p class="mt-5 text-slate text-xl leading-relaxed max-w-2xl" style="font-family: Georgia, serif;">
+        You're buying an outcome, not a headcount.
+      </p>
+    </div>
   </section>
 
-  <!-- L1 PRICING + BUNDLE CALCULATOR -->
   <section class="mx-auto max-w-6xl px-6 py-14">
-    <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight mb-2">L1 — Core pricing by service area</h2>
-    <p class="text-slate mb-8 max-w-2xl">Fixed monthly subscription, cancel anytime with 30 days notice. Areas with real compliance and regulatory risk are priced slightly higher than lower-risk, more scalable work.</p>
+    <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight mb-2 reveal">L1 — Core pricing by service area</h2>
+    <p class="text-slate mb-8 max-w-2xl reveal">Fixed monthly subscription, cancel anytime with 30 days notice. Areas with real compliance and regulatory risk are priced slightly higher than lower-risk, more scalable work.</p>
 
     <div class="grid lg:grid-cols-2 gap-6 items-start">
-      <div>
+      <div class="reveal">
         <div class="rounded-2xl border border-ink/10 overflow-hidden">
           {servicePricing.map((row, i) => (
             <div class={`flex items-center justify-between gap-4 px-5 py-4 ${i !== servicePricing.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
@@ -75,19 +75,20 @@ const steps = {
         <p class="mt-5 text-sm text-slate">L2 and L3 are scoped during a consult, since scope varies by volume and complexity.</p>
       </div>
 
-      <BundleCalculator />
+      <div class="reveal reveal-delay-2">
+        <BundleCalculator />
+      </div>
     </div>
   </section>
 
-  <!-- BUNDLES -->
   <section class="bg-ink text-sand py-20 md:py-24">
     <div class="mx-auto max-w-6xl px-6">
-      <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+      <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl reveal">
         Bundle it, and save.
       </h2>
       <div class="mt-12 grid sm:grid-cols-2 gap-5">
-        {bundles.map((b) => (
-          <div class={`rounded-2xl p-7 ${b.highlight ? 'border-2 border-teal bg-teal/10' : 'border border-sand/15 bg-sand/[0.04]'}`}>
+        {bundles.map((b, i) => (
+          <div class={`rounded-2xl p-7 card-lift reveal reveal-delay-${(i % 3) + 1} ${b.highlight ? 'border-2 border-teal bg-teal/10' : 'border border-sand/15 bg-sand/[0.04]'} ${i % 2 === 1 ? 'sm:mt-6' : ''}`}>
             <h3 class="font-[General_Sans] font-semibold text-xl">{b.name}</h3>
             <p class="mt-2 text-sand/75 text-sm">{b.desc}</p>
             <p class="mt-3 text-sand/60 text-sm leading-relaxed">{b.fit}</p>
@@ -97,9 +98,8 @@ const steps = {
     </div>
   </section>
 
-  <!-- GETTING STARTED -->
   <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-    <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl">
+    <h2 class="font-[General_Sans] font-bold text-3xl md:text-4xl tracking-tight max-w-xl reveal">
       Getting started, by tier.
     </h2>
     <div class="mt-12 grid md:grid-cols-3 gap-6">
@@ -107,13 +107,13 @@ const steps = {
         { label: 'L1 — Core', steps: steps.l1 },
         { label: 'L2 — Advanced', steps: steps.l2 },
         { label: 'L3 — Strategic', steps: steps.l3 },
-      ].map((col) => (
-        <div class="rounded-2xl border border-ink/10 p-7">
+      ].map((col, i) => (
+        <div class={`rounded-2xl border border-ink/10 p-7 card-lift reveal reveal-delay-${i + 1} ${i === 1 ? 'md:mt-8' : ''}`}>
           <span class="text-xs font-bold tracking-wide text-teal-dark">{col.label}</span>
           <ol class="mt-4 space-y-4">
-            {col.steps.map((step, i) => (
+            {col.steps.map((step, j) => (
               <li class="flex gap-3">
-                <span class="w-6 h-6 rounded-full bg-ink text-sand text-xs font-bold flex items-center justify-center shrink-0">{i + 1}</span>
+                <span class="w-6 h-6 rounded-full bg-ink text-sand text-xs font-bold flex items-center justify-center shrink-0">{j + 1}</span>
                 <span class="text-[0.93rem] text-ink/85 leading-snug">{step}</span>
               </li>
             ))}
@@ -124,13 +124,13 @@ const steps = {
   </section>
 
   <section class="mx-auto max-w-6xl px-6 pb-24">
-    <div class="rounded-3xl bg-sand-dark/60 px-8 py-14 md:px-16 text-center">
-      <p class="text-xl md:text-2xl font-[General_Sans] font-semibold max-w-2xl mx-auto leading-snug">
+    <div class="rounded-3xl bg-sand-dark/60 px-8 py-14 md:px-16 text-center reveal">
+      <p class="text-xl md:text-2xl font-[General_Sans] font-semibold max-w-2xl mx-auto leading-snug" style="font-family: Georgia, serif; font-style: italic;">
         "You didn't start your business to spend your days on admin, chasing
         invoices, or worrying about compliance. We handle the complexity —
         you build the business."
       </p>
-      <a href="/contact" class="mt-8 inline-flex items-center rounded-full bg-ink text-sand px-7 py-3.5 font-semibold hover:bg-ink-light transition">
+      <a href="/contact" class="mt-8 inline-flex items-center rounded-full bg-ink text-sand px-7 py-3.5 font-semibold hover:bg-ink-light hover:-translate-y-0.5 transition-all">
         Book a scoping call
       </a>
     </div>
