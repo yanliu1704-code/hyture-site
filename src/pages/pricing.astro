@@ -58,25 +58,29 @@ const steps = {
     </p>
   </section>
 
-  <!-- L1 PRICING BY SERVICE AREA -->
+  <!-- L1 PRICING + BUNDLE CALCULATOR -->
   <section class="mx-auto max-w-6xl px-6 py-14">
     <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight mb-2">L1 — Core pricing by service area</h2>
     <p class="text-slate mb-8 max-w-2xl">Fixed monthly subscription, cancel anytime with 30 days notice. Areas with real compliance and regulatory risk are priced slightly higher than lower-risk, more scalable work.</p>
-    <div class="rounded-2xl border border-ink/10 overflow-hidden">
-      {servicePricing.map((row, i) => (
-        <div class={`grid sm:grid-cols-[1fr_140px_1fr] gap-4 sm:gap-8 px-6 py-5 items-center ${i !== servicePricing.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
-          <span class="font-semibold">{row.name}</span>
-          <span class="font-bold text-teal-dark">{row.price}</span>
-          <span class="text-slate text-sm">{row.note}</span>
-        </div>
-      ))}
-    </div>
-    <p class="mt-5 text-sm text-slate">L2 and L3 are scoped during a consult, since scope varies by volume and complexity. All bundles include a multi-service discount of 10-20%.</p>
-  </section>
 
-  <!-- BUNDLE CALCULATOR -->
-  <section class="mx-auto max-w-6xl px-6 pb-14">
-    <BundleCalculator />
+    <div class="grid lg:grid-cols-2 gap-6 items-start">
+      <div>
+        <div class="rounded-2xl border border-ink/10 overflow-hidden">
+          {servicePricing.map((row, i) => (
+            <div class={`flex items-center justify-between gap-4 px-5 py-4 ${i !== servicePricing.length - 1 ? 'border-b border-ink/10' : ''} ${i % 2 === 1 ? 'bg-sand-dark/40' : ''}`}>
+              <div>
+                <p class="font-semibold text-sm">{row.name}</p>
+                <p class="text-slate text-xs mt-0.5">{row.note}</p>
+              </div>
+              <span class="font-bold text-teal-dark whitespace-nowrap">{row.price}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-5 text-sm text-slate">L2 and L3 are scoped during a consult, since scope varies by volume and complexity.</p>
+      </div>
+
+      <BundleCalculator />
+    </div>
   </section>
 
   <!-- BUNDLES -->
