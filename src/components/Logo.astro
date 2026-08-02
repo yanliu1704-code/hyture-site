@@ -9,17 +9,20 @@ const { variant = 'default', class: className = '', showWordmark = true } = Astr
 const textColor = variant === 'on-dark' ? '#F5F2EA' : '#1B2A4A';
 ---
 
-<a href="/" class={`inline-flex items-center gap-2.5 group ${className}`} aria-label="LZproxy home">
+<a href="/" class={`inline-flex items-center gap-2.5 group ${className}`} aria-label="Neuronex home">
   {variant === 'on-dark' ? (
     <span class="inline-flex items-center justify-center rounded-lg bg-sand px-2 py-1.5 shrink-0">
-      <img src="/lzproxy-logo-mark.png" alt="LZproxy" class="h-6 w-auto" />
+      <img src="/neuronex-logo-mark.png" alt="Neuronex" class="h-6 w-auto" />
     </span>
   ) : (
-    <img src="/lzproxy-logo-mark.png" alt="LZproxy" class="h-8 w-auto shrink-0" />
+    <img src="/neuronex-logo-mark.png" alt="Neuronex" class="h-8 w-auto shrink-0" />
   )}
   {showWordmark && (
-    <span class="font-[General_Sans] font-bold text-[1.5rem] leading-none tracking-tight" style={`color:${textColor}`}>
-      LZproxy
+    <span
+      class="font-[General_Sans] font-bold text-[1.4rem] leading-none uppercase"
+      style={`color:${textColor}; letter-spacing:0.02em;`}
+    >
+      Neuronex
     </span>
   )}
 </a>
