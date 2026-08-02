@@ -36,20 +36,32 @@ const CAL_LINK = "sammi-liu-5ti03s/scoping-call";
 
   if (!CAL_LINK.startsWith("YOUR-CAL-USERNAME")) {
     Cal("init", { origin: "https://cal.com" });
+
+    // Carry over the bundle calculator's selection (if the visitor came
+    // from there) as prefilled notes, so they don't have to re-explain
+    // what they're interested in on the call.
+    const urlParams = new URLSearchParams(window.location.search);
+    const interest = urlParams.get("interest");
+
+    const config = {
+      theme: "light",
+      layout: "month_view",
+    };
+    if (interest) {
+      config.notes = interest;
+    }
+
     Cal("inline", {
       elementOrSelector: "#neuronex-cal-embed",
       calLink: CAL_LINK,
-      config: {
-        theme: "light",
-        layout: "month_view",
-      },
+      config: config,
     });
     Cal("ui", {
-      styles: { branding: { brandColor: "#00C2B8" } },
+      styles: { branding: { brandColor: "#4FAE7F" } },
       hideEventTypeDetails: false,
     });
   } else {
     document.getElementById("neuronex-cal-embed").innerHTML =
-      '<div style="padding:2.5rem;text-align:center;color:#4A5570;font-size:0.95rem;">Booking calendar not connected yet — set CAL_LINK in CalEmbed.astro once your Cal.com event type is live.</div>';
+      '<div style="padding:2.5rem;text-align:center;color:#4A5570;font-size:0.95rem;">Booking calendar not connected yet.</div>';
   }
 </script>

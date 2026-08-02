@@ -21,7 +21,7 @@ const services = [
         class="flex items-center justify-between gap-3 rounded-xl border border-ink/10 bg-white px-4 py-3 cursor-pointer hover:border-teal/50 transition-colors has-[:checked]:border-teal has-[:checked]:bg-teal/10"
       >
         <span class="flex items-center gap-3">
-          <input type="checkbox" class="bundle-calc-checkbox w-4 h-4 accent-[#4FAE7F]" data-price={s.price} />
+          <input type="checkbox" class="bundle-calc-checkbox w-4 h-4 accent-[#4FAE7F]" data-price={s.price} data-name={s.name} />
           <span class="text-sm font-medium">{s.name}</span>
         </span>
         <span class="text-sm font-semibold text-teal-dark whitespace-nowrap">${s.price.toLocaleString()}/mo</span>
@@ -48,7 +48,7 @@ const services = [
         <span id="bundle-calc-total" class="text-2xl font-[General_Sans] font-bold">$0/mo</span>
       </div>
     </div>
-    <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-ink text-sand px-6 py-3 text-sm font-semibold hover:bg-ink-light transition shrink-0">
+    <a href="/contact" id="bundle-calc-cta" class="inline-flex items-center justify-center rounded-full bg-ink text-sand px-6 py-3 text-sm font-semibold hover:bg-ink-light transition shrink-0">
       Book a scoping call
     </a>
   </div>
@@ -61,6 +61,7 @@ const services = [
   const discountRow = document.getElementById('bundle-calc-discount-row');
   const discountLabel = document.getElementById('bundle-calc-discount-label');
   const discountAmountEl = document.getElementById('bundle-calc-discount-amount');
+  const ctaLink = document.getElementById('bundle-calc-cta') as HTMLAnchorElement | null;
 
   function discountRateFor(count: number) {
     if (count >= 5) return 0.2;
@@ -89,6 +90,18 @@ const services = [
       discountAmountEl.textContent = `−${formatMoney(discount)}`;
     } else {
       discountRow?.classList.add('hidden');
+    }
+
+    if (ctaLink) {
+      if (checked.length === 0) {
+        ctaLink.href = '/contact';
+      } else {
+        const names = checked.map((cb) => cb.dataset.name).join(', ');
+        let notes = `Interested in: ${names}. Estimated total: ${formatMoney(total)}`;
+        if (rate > 0) notes += ` (${Math.round(rate * 100)}% bundle discount applied)`;
+        notes += '.';
+        ctaLink.href = `/contact?interest=${encodeURIComponent(notes)}`;
+      }
     }
   }
 
