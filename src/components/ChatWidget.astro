@@ -1,39 +1,37 @@
 ---
 // Set this to your deployed Worker's URL after `wrangler deploy` in /worker.
-// e.g. "https://lzproxy-chat.<your-subdomain>.workers.dev"
 const CHAT_WORKER_URL = "https://lzproxy-chat.yanliu1704.workers.dev";
 ---
-<div id="lzproxy-chat-root" class="fixed bottom-5 right-5 z-[60]" data-worker-url={CHAT_WORKER_URL}>
+<div id="neuronex-chat-root" class="fixed bottom-5 right-5 z-[60]" data-worker-url={CHAT_WORKER_URL}>
   <button
-    id="lzproxy-chat-toggle"
+    id="neuronex-chat-toggle"
     class="flex items-center gap-2.5 rounded-full bg-ink text-sand pl-4 pr-5 py-3.5 shadow-lg hover:bg-ink-light transition-colors"
     aria-expanded="false"
-    aria-controls="lzproxy-chat-panel"
+    aria-controls="neuronex-chat-panel"
   >
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <path d="M2 10C2 5.58 5.58 2 10 2s8 3.58 8 8-3.58 8-8 8c-1.13 0-2.2-.23-3.18-.66L2 18l1.1-4.4C2.4 12.5 2 11.3 2 10Z" stroke="#00C2B8" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M2 10C2 5.58 5.58 2 10 2s8 3.58 8 8-3.58 8-8 8c-1.13 0-2.2-.23-3.18-.66L2 18l1.1-4.4C2.4 12.5 2 11.3 2 10Z" stroke="#4FAE7F" stroke-width="1.5" stroke-linejoin="round"/>
     </svg>
-    <span class="text-sm font-semibold">Ask LZproxy</span>
+    <span class="text-sm font-semibold">Ask Neo</span>
   </button>
 
   <div
-    id="lzproxy-chat-panel"
+    id="neuronex-chat-panel"
     class="hidden absolute bottom-[64px] right-0 w-[340px] max-w-[88vw] rounded-2xl bg-white border border-ink/10 shadow-2xl overflow-hidden"
   >
     <div class="bg-ink text-sand px-5 py-4">
-      <p class="font-semibold text-sm">LZproxy assistant</p>
+      <p class="font-semibold text-sm">Neo — Neuronex assistant</p>
       <p class="text-sand/60 text-xs mt-0.5">Usually replies in a couple of minutes</p>
     </div>
-    <div id="lzproxy-chat-messages" class="h-[280px] overflow-y-auto px-4 py-4 space-y-3 text-sm">
+    <div id="neuronex-chat-messages" class="h-[280px] overflow-y-auto px-4 py-4 space-y-3 text-sm">
       <div class="bg-sand-dark/60 rounded-xl rounded-tl-sm px-3.5 py-2.5 max-w-[85%] text-ink/85">
-        Hi 👋 I'm the LZproxy assistant. Ask me about our services, pricing, or
-        book a scoping call — what can I help with?
+        Hi, I'm Neo 👋 Ask me about our services, pricing, or book a scoping call — what can I help with?
       </div>
     </div>
-    <div id="lzproxy-chat-typing" class="hidden px-4 pb-2 text-xs text-slate">LZproxy assistant is typing…</div>
-    <form id="lzproxy-chat-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
+    <div id="neuronex-chat-typing" class="hidden px-4 pb-2 text-xs text-slate">Neo is typing…</div>
+    <form id="neuronex-chat-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
       <input
-        id="lzproxy-chat-input"
+        id="neuronex-chat-input"
         type="text"
         placeholder="Type a message…"
         autocomplete="off"
@@ -47,17 +45,16 @@ const CHAT_WORKER_URL = "https://lzproxy-chat.yanliu1704.workers.dev";
 </div>
 
 <script>
-  const root = document.getElementById('lzproxy-chat-root');
+  const root = document.getElementById('neuronex-chat-root');
   const workerUrl = root?.dataset.workerUrl || '';
 
-  const toggle = document.getElementById('lzproxy-chat-toggle');
-  const panel = document.getElementById('lzproxy-chat-panel');
-  const form = document.getElementById('lzproxy-chat-form') as HTMLFormElement | null;
-  const input = document.getElementById('lzproxy-chat-input') as HTMLInputElement | null;
-  const messages = document.getElementById('lzproxy-chat-messages');
-  const typingIndicator = document.getElementById('lzproxy-chat-typing');
+  const toggle = document.getElementById('neuronex-chat-toggle');
+  const panel = document.getElementById('neuronex-chat-panel');
+  const form = document.getElementById('neuronex-chat-form') as HTMLFormElement | null;
+  const input = document.getElementById('neuronex-chat-input') as HTMLInputElement | null;
+  const messages = document.getElementById('neuronex-chat-messages');
+  const typingIndicator = document.getElementById('neuronex-chat-typing');
 
-  // Keep a short rolling history in memory (not persisted) to send as context.
   const history: { role: 'user' | 'assistant'; content: string }[] = [];
 
   toggle?.addEventListener('click', () => {
@@ -87,8 +84,8 @@ const CHAT_WORKER_URL = "https://lzproxy-chat.yanliu1704.workers.dev";
     addBubble(text, 'user');
     if (input) input.value = '';
 
-    if (!workerUrl || workerUrl.includes('YOUR-SUBDOMAIN')) {
-      addBubble("This assistant isn't connected yet — set CHAT_WORKER_URL in ChatWidget.astro once the Worker is deployed. In the meantime, book a scoping call from the Contact page!", 'assistant');
+    if (!workerUrl) {
+      addBubble("This assistant isn't connected yet.", 'assistant');
       return;
     }
 
@@ -111,7 +108,7 @@ const CHAT_WORKER_URL = "https://lzproxy-chat.yanliu1704.workers.dev";
 
       addBubble(reply, 'assistant');
     } catch (err) {
-      addBubble("Sorry, something went wrong reaching the assistant. Please try again, or book a scoping call from the Contact page.", 'assistant');
+      addBubble("Sorry, something went wrong reaching me. Please try again, or book a scoping call from the Contact page.", 'assistant');
     } finally {
       typingIndicator?.classList.add('hidden');
       if (submitBtn) submitBtn.disabled = false;

@@ -4,7 +4,7 @@
 const CAL_LINK = "sammi-liu-5ti03s/scoping-call";
 ---
 
-<div id="lzproxy-cal-embed" class="w-full min-h-[650px] rounded-2xl overflow-hidden border border-ink/10 bg-white"></div>
+<div id="neuronex-cal-embed" class="w-full min-h-[650px] rounded-2xl overflow-hidden border border-ink/10 bg-white"></div>
 
 <script define:vars={{ CAL_LINK }}>
   (function (C, A, L) {
@@ -37,7 +37,7 @@ const CAL_LINK = "sammi-liu-5ti03s/scoping-call";
   if (!CAL_LINK.startsWith("YOUR-CAL-USERNAME")) {
     Cal("init", { origin: "https://cal.com" });
     Cal("inline", {
-      elementOrSelector: "#lzproxy-cal-embed",
+      elementOrSelector: "#neuronex-cal-embed",
       calLink: CAL_LINK,
       config: {
         theme: "light",
@@ -49,7 +49,7 @@ const CAL_LINK = "sammi-liu-5ti03s/scoping-call";
       hideEventTypeDetails: false,
     });
   } else {
-    document.getElementById("lzproxy-cal-embed").innerHTML =
+    document.getElementById("neuronex-cal-embed").innerHTML =
       '<div style="padding:2.5rem;text-align:center;color:#4A5570;font-size:0.95rem;">Booking calendar not connected yet — set CAL_LINK in CalEmbed.astro once your Cal.com event type is live.</div>';
   }
 </script>
