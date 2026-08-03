@@ -90,6 +90,17 @@ const TOOLS = [
   },
 ];
 
+const ALLOWED_ORIGINS = [
+  'https://getneuronex.com',
+  'https://www.getneuronex.com',
+  'https://hyture-site.yanliu1704.workers.dev',
+];
+
+function resolveOrigin(request) {
+  const requestOrigin = request.headers.get('Origin');
+  return ALLOWED_ORIGINS.includes(requestOrigin) ? requestOrigin : ALLOWED_ORIGINS[0];
+}
+
 function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': origin,
@@ -207,7 +218,7 @@ async function callDeepSeek(env, messages) {
 
 export default {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || '*';
+    const origin = resolveOrigin(request);
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: corsHeaders(origin) });

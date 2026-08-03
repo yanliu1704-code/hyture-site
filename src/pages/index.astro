@@ -42,7 +42,7 @@ const glance = [
         </div>
       </div>
 
-      <div class="relative reveal reveal-delay-2 md:mt-10">
+      <div class="relative reveal reveal-delay-2">
         <div class="rounded-2xl bg-ink text-sand shadow-xl overflow-hidden">
           <div class="flex items-center gap-2 px-5 py-4 border-b border-sand/10">
             <span class="w-2.5 h-2.5 rounded-full bg-teal"></span>
@@ -80,8 +80,8 @@ const glance = [
 
     <div class="mt-16 grid sm:grid-cols-2 gap-x-10 gap-y-12">
       {differentiators.map((d, i) => (
-        <div class={`flex gap-4 reveal reveal-delay-${(i % 3) + 1} ${i % 2 === 1 ? 'sm:mt-8' : ''}`}>
-          <div class="w-2 shrink-0 rounded-full bg-teal"></div>
+        <div class={`flex gap-4 reveal reveal-delay-${(i % 3) + 1}`}>
+          <div class="w-1.5 h-6 shrink-0 rounded-full bg-teal mt-1"></div>
           <div>
             <h3 class="font-semibold text-lg">{d.title}</h3>
             <p class="mt-1.5 text-slate leading-relaxed">{d.body}</p>
@@ -183,7 +183,7 @@ const glance = [
         </ul>
       </div>
 
-      <div class="rounded-2xl bg-white border border-ink/10 p-8 card-lift reveal reveal-delay-2 md:mt-10">
+      <div class="rounded-2xl bg-white border border-ink/10 p-8 card-lift reveal reveal-delay-2">
         <h3 class="font-semibold text-sm uppercase tracking-wide text-ink/50">What AI handles</h3>
         <div class="mt-5 space-y-4">
           {[
