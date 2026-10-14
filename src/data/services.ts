@@ -39,20 +39,8 @@ export const services: ServiceArea[] = [
     ],
   },
   {
-    id: 'hr-payroll',
-    number: '03',
-    name: 'HR & Payroll',
-    blurb: 'Payroll, STP, super, Fair Work compliance — handled accurately and on time.',
-    intro: 'Stay compliant with Fair Work, keep your people paid accurately and on time, and build the foundations of a great workplace — without an in-house HR team.',
-    tiers: [
-      { label: 'L1 — CORE', engagement: 'Monthly subscription, cancel anytime', items: ['Payroll processing — employees and contractors', 'Single Touch Payroll (STP) lodgement', 'Superannuation processing and SGC compliance', 'Leave entitlement tracking', 'Basic employment contract templates', 'Termination and redundancy calculations'] },
-      { label: 'L2 — ADVANCED', engagement: 'Onboarding consult, 3-month minimum', items: ['Everything in L1', 'Onboarding — offer letters, paperwork, Day 1 checklists', 'Offboarding — exit process, final pay, access removal', 'HR documentation — position descriptions, policies, handbook', 'Fair Work compliance monitoring', 'Performance review scheduling', 'Workforce reporting'] },
-      { label: 'L3 — STRATEGIC', engagement: 'Custom solution design, 6-month minimum', items: ['Everything in L1 & L2', 'Fractional HR Manager function', 'Workforce planning and org design', 'Remuneration benchmarking', 'Culture and engagement programs', 'Performance management frameworks', 'Recruitment coordination'] },
-    ],
-  },
-  {
     id: 'operations',
-    number: '04',
+    number: '03',
     name: 'Operations & Procurement',
     blurb: 'Purchase orders, supplier management, inventory — kept moving.',
     intro: 'Keep your supply chain moving, your costs controlled, and your operational processes running smoothly — without a dedicated ops team.',
@@ -63,20 +51,8 @@ export const services: ServiceArea[] = [
     ],
   },
   {
-    id: 'marketing',
-    number: '05',
-    name: 'Marketing',
-    blurb: 'Social, content, campaigns — a consistent presence without an in-house team.',
-    intro: 'Maintain a consistent, professional presence — online and offline — and run targeted campaigns that generate leads, without an in-house marketing team.',
-    tiers: [
-      { label: 'L1 — CORE', engagement: 'Monthly subscription, cancel anytime', items: ['Social media scheduling and posting', 'Content calendar management, 4–6 weeks ahead', 'Basic performance reporting', 'Graphic creation from your brand assets', 'Google My Business management'] },
-      { label: 'L2 — ADVANCED', engagement: 'Onboarding consult, 3-month minimum', items: ['Everything in L1', 'Content creation — social, blogs, EDMs, web copy', 'Email marketing — campaigns, lists, reporting', 'Basic SEO — on-page, keyword tracking', 'Paid ad management (ad spend billed separately)', 'Campaign coordination', 'Competitor monitoring'] },
-      { label: 'L3 — STRATEGIC', engagement: 'Custom solution design, 6-month minimum', items: ['Everything in L1 & L2', 'Fractional Marketing Manager', 'Brand development and positioning', 'Full cross-channel campaign strategy', 'Marketing technology stack management', 'Content strategy and thought leadership', 'Referral and partnership programs'] },
-    ],
-  },
-  {
     id: 'customer-service',
-    number: '06',
+    number: '04',
     name: 'Customer Service',
     blurb: 'Tickets, live chat, phone overflow — fast, on-brand, always covered.',
     intro: 'Deliver fast, consistent, professional customer experiences — backed by AI-assisted tooling and a human team that represents your business the way you would.',
@@ -88,7 +64,7 @@ export const services: ServiceArea[] = [
   },
   {
     id: 'systems',
-    number: '07',
+    number: '05',
     name: 'Systems & Project Management',
     blurb: 'Migrations, new tools, complex initiatives — led from scoping to go-live.',
     intro: "Whether you're changing platforms, building new processes, or managing a complex initiative — structured, experienced project leadership so your business doesn't miss a beat.",

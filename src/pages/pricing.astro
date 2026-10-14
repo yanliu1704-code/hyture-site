@@ -3,12 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import BundleCalculator from '../components/BundleCalculator.astro';
 
 const servicePricing = [
-  { name: 'Bookkeeping & Financial Management', price: '$2,400/mo', note: 'Regulatory risk and specialist expertise' },
-  { name: 'HR & Payroll', price: '$2,400/mo', note: 'Compliance risk and legal exposure' },
-  { name: 'Administration & Executive Support', price: '$2,000/mo', note: 'Baseline' },
-  { name: 'Operations & Procurement', price: '$2,000/mo', note: 'Baseline' },
-  { name: 'Customer Service', price: '$2,000/mo', note: 'Baseline' },
-  { name: 'Marketing', price: '$1,800/mo', note: 'Lower compliance load, more scalable' },
+  { name: 'Bookkeeping & Financial Management', price: '$1,800/mo', note: 'Regulatory risk and specialist expertise' },
+  { name: 'Administration & Executive Support', price: '$1,700/mo', note: 'Baseline' },
+  { name: 'Operations & Procurement', price: '$1,800/mo', note: 'Baseline' },
+  { name: 'Customer Service', price: '$1,600/mo', note: 'Baseline' },
   { name: 'Systems & Project Management', price: 'Project quote', note: 'Scoped per project, not a subscription' },
 ];
 
@@ -17,11 +15,6 @@ const bundles = [
     name: 'Back Office Bundle',
     desc: 'Bookkeeping L1/L2 + Administration L1 + Payroll L1.',
     fit: 'Ideal for businesses that need reliable day-to-day support without the overhead of a full office manager and bookkeeper.',
-  },
-  {
-    name: 'Growth Bundle',
-    desc: 'Marketing L2 + Customer Service L2 + Administration L2.',
-    fit: 'Ideal for businesses in growth mode that need customer-facing and revenue-supporting functions.',
   },
   {
     name: 'Ops Bundle',
@@ -57,7 +50,7 @@ const steps = {
 
   <section class="mx-auto max-w-6xl px-6 py-14">
     <h2 class="font-[General_Sans] font-bold text-2xl md:text-3xl tracking-tight mb-2 reveal">L1 — Core pricing by service area</h2>
-    <p class="text-slate mb-8 max-w-2xl reveal">Fixed monthly subscription, cancel anytime with 30 days notice. Areas with real compliance and regulatory risk are priced slightly higher than lower-risk, more scalable work.</p>
+    <p class="text-slate mb-8 max-w-2xl reveal">Fixed monthly subscription, cancel anytime with 30 days notice.</p>
 
     <div class="grid lg:grid-cols-2 gap-6 items-start">
       <div class="reveal">

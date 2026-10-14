@@ -90,7 +90,7 @@ export default {
           },
           body: JSON.stringify({
             from: env.RESEND_FROM || 'LZproxy Website <onboarding@resend.dev>',
-            to: [env.NOTIFY_EMAIL],
+            to: (env.NOTIFY_EMAIL || '').split(',').map((e) => e.trim()).filter(Boolean),
             reply_to: email,
             subject: `New enquiry: ${name}${business ? ` (${business})` : ''}`,
             html: `

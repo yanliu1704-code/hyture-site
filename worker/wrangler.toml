@@ -4,7 +4,6 @@ compatibility_date = "2026-07-01"
 
 [vars]
 # Your site's exact origin (no trailing slash)
-ALLOWED_ORIGIN = "https://hyture-site.yanliu1704.workers.dev"
 
 # Your Cal.com username and event slug — from your booking page URL:
 # https://cal.com/sammi-liu-5ti03s/scoping-call

@@ -27,14 +27,12 @@ TONE: trusted, capable, quietly confident. Plain, direct sentences. Never use AI
 
 WHAT NEURONEX DOES: takes ownership of back-office and operational work so small business owners can focus on running the business. Every service combines AI automation with human review — AI handles the repetitive volume (document extraction, data entry, drafting, anomaly detection), and a named human reviews everything before it reaches the client.
 
-SEVEN SERVICE AREAS (each has 3 tiers):
+FIVE SERVICE AREAS (each has 3 tiers):
 1. Bookkeeping & Financial Management — AP/AR, bank reconciliation, BAS/GST lodgement, on Xero/MYOB/QuickBooks.
 2. Administration & Executive Support — inbox/calendar management, document prep, scheduling, travel coordination.
-3. HR & Payroll — payroll processing, STP lodgement, super, Fair Work compliance, onboarding/offboarding.
-4. Operations & Procurement — purchase orders, supplier management, inventory tracking.
-5. Marketing — social media, content, email marketing, basic SEO, paid ads.
-6. Customer Service — helpdesk, live chat, phone overflow, CRM management.
-7. Systems & Project Management — system migrations, process redesign, digital transformation.
+3. Operations & Procurement — purchase orders, supplier management, inventory tracking.
+4. Customer Service — helpdesk, live chat, phone overflow, CRM management.
+5. Systems & Project Management — system migrations, process redesign, digital transformation.
 
 TIER STRUCTURE: L1 Core (fixed monthly subscription, cancel anytime, live in 5 business days) — L2 Advanced (monthly retainer after a scoping consult, 3-month minimum) — L3 Strategic (bespoke retainer, fractional leadership, 6-month minimum). Bundles get a 10-20% discount.
 

@@ -3,9 +3,8 @@ main = "src/index.js"
 compatibility_date = "2026-07-01"
 
 [vars]
-ALLOWED_ORIGIN = "https://hyture-site.yanliu1704.workers.dev"
-NOTIFY_EMAIL = "yanliu1704@gmail.com"
-RESEND_FROM = "LZproxy Website <onboarding@resend.dev>"
+NOTIFY_EMAIL = "info@getneuronex.com"
+RESEND_FROM = "Neuronex Website <noreply@getneuronex.com>"
 
 # Secrets — do NOT put these here. Set with:
 #   wrangler secret put RESEND_API_KEY
