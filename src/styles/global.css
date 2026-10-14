@@ -76,3 +76,11 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* cards that both reveal and lift: keep the fade, and no hover lag from the stagger delay */
+.card-lift.reveal {
+  transition: opacity 0.6s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift.reveal.is-visible:hover {
+  transition-delay: 0s;
+}
